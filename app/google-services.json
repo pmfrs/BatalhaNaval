@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "123241350401",
+    "firebase_url": "https://batalha-naval-94dab.firebaseio.com",
+    "project_id": "batalha-naval-94dab",
+    "storage_bucket": "batalha-naval-94dab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123241350401:android:cf320b89d0f2905f",
+        "android_client_info": {
+          "package_name": "pt.iscte.batalhanaval"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "123241350401-odh0gfuglg0dl4qes5412v3gmfhsjp4k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pt.iscte.batalhanaval",
+            "certificate_hash": "c8fb732a5785c9c371bcfe5b2ffb99a27375aeee"
+          }
+        },
+        {
+          "client_id": "123241350401-du080nfrqb044c9kebe8s80tm5m2qmum.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA576H6dGfmLwQNlYZrTft1Bphk-A13M_A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "123241350401-du080nfrqb044c9kebe8s80tm5m2qmum.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
