@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passTxt = (EditText) findViewById(R.id.passwordTxt);
         final Button logBtn = (Button) findViewById(R.id.loginBtn);
         final TextView registerTv = (TextView) findViewById(R.id.registTv);
+        final Button cheatBtn = (Button) findViewById(R.id.cheat);
 
         registerTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +38,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        cheatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent registerIntent = new Intent(LoginActivity.this, Game_Activity.class);
+                LoginActivity.this.startActivity(registerIntent);
+            }
+        });
 
         callbackManager = CallbackManager.Factory.create();
 
