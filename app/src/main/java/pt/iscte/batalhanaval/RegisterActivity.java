@@ -27,7 +27,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private Button cancBtn ;
     private ProgressDialog pgb;
     private FirebaseAuth firebaseAuth;
-    private String test;
 
 
     @Override
