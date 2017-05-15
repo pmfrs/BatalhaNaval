@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Batalha Naval</string>
     <string name="facebook_app_id">1939969799583182</string>
+    <string name="title_activity_btlista_dispositivos">BTListaDispositivos</string>
 </resources>
