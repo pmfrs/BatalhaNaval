@@ -1,20 +1,26 @@
 package pt.iscte.batalhanaval;
 
+import android.view.View;
+
+import java.io.Serializable;
+
 /**
  * Created by Sara on 13/04/2017.
  */
 
-public class Player {
+public class Player implements Serializable {
     private boolean turn;
     private String playerName;
     public Ship[] ships;
     private int [][] board;
-
+View view;
     public Player (String playerName){
         turn = false;
         this.playerName = playerName;
+        initBoard();
         ships = new Ship[5];
         board = new int[10][10];
+
 
 
     }
@@ -25,6 +31,10 @@ public class Player {
                 board [x][y] = 0;
             }
         }
+    }
+
+    public String getName(){
+        return playerName;
     }
 
     public boolean getTurn(){
@@ -45,6 +55,10 @@ public class Player {
 
     //}
 
+   // public void attack(int row, int col){
+     //   if()
+    //}
+
 
 
     public void deleteShip (Ship ship){
@@ -54,6 +68,23 @@ public class Player {
                     board[i] [j] = 0;
             }
         }
+
+    }
+
+    public void jogar(){
+
+        view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                for(int i =0; i<ships.length; i++){
+                if((view.getId() == ships[i].idShip)){
+                        view.setBackgroundColor(000);
+                    }
+
+                }
+                return false;
+            }
+        });
 
     }
 
