@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         cheatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent registerIntent = new Intent(LoginActivity.this, MultiplayerActivity.class);
+                Intent registerIntent = new Intent(LoginActivity.this, Game_Activity.class);
                 LoginActivity.this.startActivity(registerIntent);
             }
         });
@@ -102,19 +102,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                Toast.makeText(getApplicationContext(),user.getEmail().toLowerCase().toString(),Toast.LENGTH_LONG).show();
-                if (user != null){
-                    startActivity(new Intent(getApplicationContext(),Lobby.class));
-                    finish();
-                }
-
-            }
-        };
     }
 
     private void handleFacebookAccessToken(AccessToken accessToken) {
@@ -125,6 +113,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
                             Toast.makeText(getApplicationContext(),"Login Accepted",Toast.LENGTH_LONG).show();
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                            Toast.makeText(getApplicationContext(),user.getEmail().toLowerCase().toString(),Toast.LENGTH_LONG).show();
+                            if (user != null) {
+                                startActivity(new Intent(getApplicationContext(), Lobby.class));
+                                finish();
+                            }
                         } else if (task.isComplete()){
                             Toast.makeText(getApplicationContext(),"Login Failed!",Toast.LENGTH_LONG).show();
                         }
