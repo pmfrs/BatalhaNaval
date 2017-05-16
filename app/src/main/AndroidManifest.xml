@@ -3,11 +3,13 @@
     package="pt.iscte.batalhanaval">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-feature android:name="android.hardware.bluetooth" />
+
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
 
     <application
@@ -34,6 +36,7 @@
             android:value="@string/facebook_app_id" />
 
         <activity android:name=".Lobby" />
+        <activity android:name=".InstructionsActivity"></activity>
     </application>
 
 </manifest>

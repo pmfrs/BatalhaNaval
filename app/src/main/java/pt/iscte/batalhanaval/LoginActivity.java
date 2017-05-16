@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +17,6 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -57,7 +55,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         usernameTxt = (EditText) findViewById(R.id.rgUsernameTxt);
         passTxt = (EditText) findViewById(R.id.passwordTxt);
         logBtn = (Button) findViewById(R.id.loginBtn);
-        registerTv = (TextView) findViewById(R.id.registTv);
+        registerTv = (TextView) findViewById(R.id.logOutButton);
         progressDialog = new ProgressDialog(this);
 
 
