@@ -73,7 +73,8 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener{
         Lobby.this.startActivity(registerIntent);
     }
     private void instructions(){
-        Intent registerIntent = new Intent(Lobby.this, InstructionsActivity.class);
-        Lobby.this.startActivity(registerIntent);
+        //Intent registerIntent = new Intent(Lobby.this, InstructionsActivity.class);
+        //Lobby.this.startActivity(registerIntent);
+
     }
 }
