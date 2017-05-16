@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         cheatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent registerIntent = new Intent(LoginActivity.this, Game_Activity.class);
+                Intent registerIntent = new Intent(LoginActivity.this, MultiplayerActivity.class);
                 LoginActivity.this.startActivity(registerIntent);
             }
         });
