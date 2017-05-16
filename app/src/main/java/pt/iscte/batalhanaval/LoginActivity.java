@@ -37,7 +37,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText passTxt;
     private Button logBtn;
     private TextView registerTv;
-    private Button cheatBtn;
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
     private LoginButton loginFB;
@@ -59,7 +58,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         passTxt = (EditText) findViewById(R.id.passwordTxt);
         logBtn = (Button) findViewById(R.id.loginBtn);
         registerTv = (TextView) findViewById(R.id.registTv);
-        cheatBtn = (Button) findViewById(R.id.cheat);
         progressDialog = new ProgressDialog(this);
 
 
@@ -71,13 +69,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        cheatBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent registerIntent = new Intent(LoginActivity.this, Game_Activity.class);
-                LoginActivity.this.startActivity(registerIntent);
-            }
-        });
         logBtn.setOnClickListener(this);
 
         callbackManager = CallbackManager.Factory.create();
