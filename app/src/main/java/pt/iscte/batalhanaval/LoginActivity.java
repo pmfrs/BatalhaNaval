@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         usernameTxt = (EditText) findViewById(R.id.rgUsernameTxt);
         passTxt = (EditText) findViewById(R.id.passwordTxt);
         logBtn = (Button) findViewById(R.id.loginBtn);
-        registerTv = (TextView) findViewById(R.id.logOutButton);
+        registerTv = (TextView) findViewById(R.id.regButton);
         progressDialog = new ProgressDialog(this);
 
 

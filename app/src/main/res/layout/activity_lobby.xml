@@ -4,69 +4,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/app_background"
     tools:context="pt.iscte.batalhanaval.Lobby">
 
-    <TextView
-        android:id="@+id/LogOutTV"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Logout"
-        android:textAlignment="center"
-        android:textColor="@android:color/holo_blue_dark"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:dividerPadding="8dp"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/BNText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Batalha Naval"
-        android:textAlignment="center"
-        android:textSize="36sp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="72dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        <TextView
+            android:id="@+id/LogOutTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="Logout"
+            android:textAlignment="center"
+            android:textColor="@android:color/holo_blue_dark" />
 
-    <Button
-        android:id="@+id/play_pc"
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        android:text="Single Player"
-        android:layout_marginTop="70dp"
-        app:layout_constraintTop_toBottomOf="@+id/BNText"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:fontFamily="casual"
+            android:gravity="center"
+            android:text="@string/LobbyTxt"
+            android:textAlignment="center"
+            android:textSize="28sp" />
 
-    <Button
-        android:id="@+id/play_multiplayer"
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        android:text="MULTIPLAYER"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/play_pc"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        <Button
+            android:id="@+id/play_pc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SINGLEPLAYER"
+            android:textAlignment="center" />
 
-    <Button
-        android:id="@+id/instBtn"
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:text="INSTRUÇÕES"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/play_multiplayer" />
+        <Button
+            android:id="@+id/play_multiplayer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="MULTIPLAYER"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/instBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="INSTRUÇÕES"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@+id/play_multiplayer" />
+
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
