@@ -141,6 +141,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
     private Button placeShips;
     private Button ready;
 
+    private int boatsDisplay = 99;
     // private Button t;
 
 
@@ -272,6 +273,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), GameActivity.class );
+                i.putExtra("BOATS_DISPLAY",boatsDisplay);
                 startActivity(i);
             }
         });
@@ -462,11 +464,11 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
         };
 
         Random rnd = new Random();
-        int boardposition =  rnd.nextInt(1) ;
+        boatsDisplay =  rnd.nextInt(1) ;
         ImageView ship;
         TextView box;
 
-        Log.d("tag", "Random escolheu " + Integer.toString(boardposition));
+        Log.d("tag", "Random escolheu " + Integer.toString(boatsDisplay));
         for (int i = 0; i < 5; i++) {
             Drawable draw;
             BitmapDrawable drawable1;

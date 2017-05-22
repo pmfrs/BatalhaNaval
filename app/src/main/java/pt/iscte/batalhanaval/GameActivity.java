@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 private GridLayout glp;
@@ -24,13 +25,24 @@ private TextView B00p;
     private Ship s3;
     private Ship s4;
     private Ship s5;
+
+    private int myBoatsDisplay = 99;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        player2 = new Player("player2");
+        String intentString = getIntent().getStringExtra("BOATS_DISPLAY");
 
+        try{
+            myBoatsDisplay = Integer.parseInt(intentString);}
+        catch (NumberFormatException e){
+            Toast.makeText(this,"An error occured.",Toast.LENGTH_SHORT).show();
+            Intent registerIntent = new Intent(GameActivity.this, Lobby.class);
+            GameActivity.this.startActivity(registerIntent);
+        }
+
+        player2 = new Player("player2");
 
         glp = (GridLayout) findViewById(R.id.glPrincipal);
         B00p = (TextView) findViewById(R.id.button00p);
@@ -52,15 +64,6 @@ private TextView B00p;
         B10p.setOnClickListener(this);
         B20p.setOnClickListener(this);
         B04p.setOnClickListener(this);
-
-
-
-
-
-
-
-
-
     }
 
     public void putShipsP2 (){
