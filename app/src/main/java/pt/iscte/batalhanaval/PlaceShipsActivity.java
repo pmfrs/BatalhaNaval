@@ -28,9 +28,8 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouchListener {
-    private LinearLayout linearLayout;
-    private GridLayout gridLayout;
 
+    public GridLayout glT;
     private ImageView ship3r, ship2r, ship1r, ship4r, ship5r;
     private Ship s1, s2, s3, s4, s5;
     private Ship[] ships = new Ship[5];
@@ -70,6 +69,8 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
         ship2r = (ImageView) findViewById(R.id.ship2r);
         ship4r = (ImageView) findViewById(R.id.ship4r);
         ship5r = (ImageView) findViewById(R.id.ship5r);
+
+        glT = (GridLayout) findViewById(R.id.glTop);
 
         B1 = (TextView) findViewById(R.id.button00);
         B2 = (TextView) findViewById(R.id.button10);
@@ -125,7 +126,6 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
 
 
 
-        linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         // gridLayout = (GridLayout) findViewById(R.id.gridLayout8);
 
 
@@ -183,38 +183,6 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
     };
 
 
-    View.OnDragListener dragListener = new View.OnDragListener() {
-        @Override
-        public boolean onDrag(View v, DragEvent event) {
-            final View view = (View) event.getLocalState();
-
-            int dragEvent = event.getAction();
-            switch (dragEvent) {
-                case DragEvent.ACTION_DRAG_ENTERED:
-
-                    break;
-                case DragEvent.ACTION_DROP:
-                    if (view.getId() == R.id.ship1r) {
-
-                        Log.d("tag", Float.toString(B1.getX()));
-                        Log.d("tag", Float.toString(B2.getY()));
-                        Drawable x = ship1r.getDrawable();
-
-                        gridLayout.setBackground(x);
-                    }
-                    //view.animate()
-                    //      .x(B1.getX() )
-                    // .y(B1.getY() )
-                    //.start();
-
-
-                    break;
-
-            }
-            return true;
-
-        }
-    };
 
 
     public void ready(View view) {
@@ -413,8 +381,9 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
 
     }
 
-
-
+    public void setGrid(){
+        glT.setVisibility( View.VISIBLE);
+    }
 
 
 

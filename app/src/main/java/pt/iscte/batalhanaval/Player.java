@@ -3,6 +3,7 @@ package pt.iscte.batalhanaval;
 import android.view.View;
 
 import java.io.Serializable;
+import java.util.Random;
 
 /**
  * Created by Sara on 13/04/2017.
@@ -13,13 +14,13 @@ public class Player implements Serializable {
     private String playerName;
     public Ship[] ships;
     private int [][] board;
-View view;
+
     public Player (String playerName){
         turn = false;
         this.playerName = playerName;
-        initBoard();
+        //initBoard();
         ships = new Ship[5];
-        board = new int[10][10];
+       // board = new int[10][10];
 
 
 
@@ -61,6 +62,8 @@ View view;
 
 
 
+
+
     public void deleteShip (Ship ship){
         for(int i =0; i<5; i++){
             for (int j = 0 ; j<5; j++){
@@ -71,37 +74,43 @@ View view;
 
     }
 
-    public void jogar(){
 
-        view.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                for(int i =0; i<ships.length; i++){
-                if((view.getId() == ships[i].idShip)){
-                        view.setBackgroundColor(000);
-                    }
 
-                }
-                return false;
-            }
-        });
-
+    public int[][] getBoard(){
+        return board;
     }
 
     public void addShipsToGrid(int row, int col, Ship ship){
 
-        if(row+ship.getHeight() <= 10 && col+ship.getLenght() <= 10){
+        //if(row+ship.getHeight() <= 10 && col+ship.getLenght() <= 10){
 
             //Fazer metodo para verificar se nao existe nenhum navio no mesmo sitio
 
-            for(int i = row; i< row + ship.getHeight(); i++){
-                board[i][col] = ship.getIdShip();
-            }
+          //  for(int i = row; i< row + ship.getHeight(); i++){
+                board[row][col] = ship.getIdShip();
+            //}
 
-            for(int j = col; j< col + ship.getLenght() ; j++){
-                board[row][j] = ship.getIdShip();
-            }
+           // for(int j = col; j< col + ship.getLenght() ; j++){
+             //   board[row][j] = ship.getIdShip();
+            //}
 
-        }
+       // }
+    }
+
+    public int [] chooseAttack(){
+        int l = 0;
+        int c = 0;
+        int [] array = new int [2];
+        Random r = new Random();
+        l = r.nextInt(10);
+        c = r.nextInt(10);
+        array[0] = l;
+        array[1] = c;
+        return array;
+    }
+
+    public String activeUser(String username){
+        return username;
+
     }
 }
