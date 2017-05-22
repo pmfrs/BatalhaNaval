@@ -7,6 +7,7 @@
     android:layout_gravity="top"
     android:gravity="right"
     android:layout_marginLeft="20dp"
+    android:background="@drawable/app_background"
     tools:context="pt.iscte.batalhanaval.GameActivity">
 
     <GridLayout

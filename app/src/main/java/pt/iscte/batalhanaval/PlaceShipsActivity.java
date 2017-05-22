@@ -26,32 +26,118 @@ import org.w3c.dom.Text;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouchListener {
+    private LinearLayout linearLayout;
+    private GridLayout gridLayout;
 
-    public GridLayout glT;
     private ImageView ship3r, ship2r, ship1r, ship4r, ship5r;
     private Ship s1, s2, s3, s4, s5;
     private Ship[] ships = new Ship[5];
     private Player player1, player2;
-
-    private TextView B1;
-    private TextView B2;
+    private TextView B00;
+    private TextView B10;
+    private TextView B20;
+    private TextView B30;
+    private TextView B40;
+    private TextView B50;
+    private TextView B60;
+    private TextView B70;
+    private TextView B80;
+    private TextView B90;
+    private TextView B01;
     private TextView B11;
     private TextView B21;
-    private TextView B62;
-    private TextView B52;
+    private TextView B31;
+    private TextView B41;
+    private TextView B51;
+    private TextView B61;
+    private TextView B71;
+    private TextView B81;
+    private TextView B91;
+    private TextView B02;
+    private TextView B12;
+    private TextView B22;
+    private TextView B32;
     private TextView B42;
+    private TextView B52;
+    private TextView B62;
     private TextView B72;
+    private TextView B82;
+    private TextView B92;
+    private TextView B03;
+    private TextView B13;
+    private TextView B23;
+    private TextView B33;
+    private TextView B43;
+    private TextView B53;
+    private TextView B63;
+    private TextView B73;
+    private TextView B83;
+    private TextView B93;
+    private TextView B04;
+    private TextView B14;
+    private TextView B24;
+    private TextView B34;
+    private TextView B44;
+    private TextView B54;
+    private TextView B64;
+    private TextView B74;
+    private TextView B84;
+    private TextView B94;
+    private TextView B05;
+    private TextView B15;
+    private TextView B25;
+    private TextView B35;
+    private TextView B45;
     private TextView B55;
     private TextView B65;
     private TextView B75;
+    private TextView B85;
+    private TextView B95;
+    private TextView B06;
+    private TextView B16;
+    private TextView B26;
+    private TextView B36;
+    private TextView B46;
+    private TextView B56;
+    private TextView B66;
+    private TextView B76;
+    private TextView B86;
+    private TextView B96;
+    private TextView B07;
+    private TextView B17;
+    private TextView B27;
+    private TextView B37;
+    private TextView B47;
+    private TextView B57;
+    private TextView B67;
+    private TextView B77;
+    private TextView B87;
+    private TextView B97;
+    private TextView B08;
+    private TextView B18;
     private TextView B28;
     private TextView B38;
+    private TextView B48;
+    private TextView B58;
+    private TextView B68;
+    private TextView B78;
+    private TextView B88;
+    private TextView B98;
+    private TextView B09;
+    private TextView B19;
+    private TextView B29;
+    private TextView B39;
+    private TextView B49;
+    private TextView B59;
+    private TextView B69;
+    private TextView B79;
+    private TextView B89;
+    private TextView B99;
 
 
-
-    private TextView B01;
     private Button placeShips;
     private Button ready;
 
@@ -70,43 +156,123 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
         ship4r = (ImageView) findViewById(R.id.ship4r);
         ship5r = (ImageView) findViewById(R.id.ship5r);
 
-        glT = (GridLayout) findViewById(R.id.glTop);
-
-        B1 = (TextView) findViewById(R.id.button00);
-        B2 = (TextView) findViewById(R.id.button10);
-        B11 = (TextView) findViewById((R.id.button11)) ;
-        B01= (TextView) findViewById((R.id.button01));
+        B00 = (TextView) findViewById(R.id.button00);
+        B10 = (TextView) findViewById(R.id.button10);
+        B20 = (TextView) findViewById(R.id.button20);
+        B30 = (TextView) findViewById(R.id.button30);
+        B40 = (TextView) findViewById(R.id.button40);
+        B50 = (TextView) findViewById(R.id.button50);
+        B60 = (TextView) findViewById(R.id.button60);
+        B70 = (TextView) findViewById(R.id.button70);
+        B80 = (TextView) findViewById(R.id.button80);
+        B90 = (TextView) findViewById(R.id.button90);
+        B01 = (TextView) findViewById(R.id.button01);
+        B11 = (TextView) findViewById(R.id.button11);
         B21 = (TextView) findViewById(R.id.button21);
+        B31 = (TextView) findViewById(R.id.button31);
+        B41 = (TextView) findViewById(R.id.button41);
+        B51 = (TextView) findViewById(R.id.button51);
+        B61 = (TextView) findViewById(R.id.button61);
+        B71 = (TextView) findViewById(R.id.button71);
+        B81 = (TextView) findViewById(R.id.button81);
+        B91 = (TextView) findViewById(R.id.button91);
+        B02 = (TextView) findViewById(R.id.button02);
+        B12 = (TextView) findViewById(R.id.button12);
+        B22 = (TextView) findViewById(R.id.button22);
+        B32 = (TextView) findViewById(R.id.button32);
         B42 = (TextView) findViewById(R.id.button42);
         B52 = (TextView) findViewById(R.id.button52);
         B62 = (TextView) findViewById(R.id.button62);
         B72 = (TextView) findViewById(R.id.button72);
+        B82 = (TextView) findViewById(R.id.button82);
+        B92 = (TextView) findViewById(R.id.button92);
+        B03 = (TextView) findViewById(R.id.button03);
+        B13 = (TextView) findViewById(R.id.button13);
+        B23 = (TextView) findViewById(R.id.button23);
+        B33 = (TextView) findViewById(R.id.button33);
+        B43 = (TextView) findViewById(R.id.button43);
+        B53 = (TextView) findViewById(R.id.button53);
+        B63 = (TextView) findViewById(R.id.button63);
+        B73 = (TextView) findViewById(R.id.button73);
+        B83 = (TextView) findViewById(R.id.button83);
+        B93 = (TextView) findViewById(R.id.button93);
+        B04 = (TextView) findViewById(R.id.button04);
+        B14 = (TextView) findViewById(R.id.button14);
+        B24 = (TextView) findViewById(R.id.button24);
+        B34 = (TextView) findViewById(R.id.button34);
+        B44 = (TextView) findViewById(R.id.button44);
+        B54 = (TextView) findViewById(R.id.button54);
+        B64 = (TextView) findViewById(R.id.button64);
+        B74 = (TextView) findViewById(R.id.button74);
+        B84 = (TextView) findViewById(R.id.button84);
+        B94 = (TextView) findViewById(R.id.button94);
+        B05 = (TextView) findViewById(R.id.button05);
+        B15 = (TextView) findViewById(R.id.button15);
+        B25 = (TextView) findViewById(R.id.button25);
+        B35 = (TextView) findViewById(R.id.button35);
+        B45 = (TextView) findViewById(R.id.button45);
         B55 = (TextView) findViewById(R.id.button55);
         B65 = (TextView) findViewById(R.id.button65);
         B75 = (TextView) findViewById(R.id.button75);
-        B38 = (TextView) findViewById(R.id.button38);
+        B85 = (TextView) findViewById(R.id.button85);
+        B95 = (TextView) findViewById(R.id.button95);
+        B06 = (TextView) findViewById(R.id.button06);
+        B16 = (TextView) findViewById(R.id.button16);
+        B26 = (TextView) findViewById(R.id.button26);
+        B36 = (TextView) findViewById(R.id.button36);
+        B46 = (TextView) findViewById(R.id.button46);
+        B56 = (TextView) findViewById(R.id.button56);
+        B66 = (TextView) findViewById(R.id.button66);
+        B76 = (TextView) findViewById(R.id.button76);
+        B86 = (TextView) findViewById(R.id.button86);
+        B96 = (TextView) findViewById(R.id.button96);
+        B07 = (TextView) findViewById(R.id.button07);
+        B17 = (TextView) findViewById(R.id.button17);
+        B27 = (TextView) findViewById(R.id.button27);
+        B37 = (TextView) findViewById(R.id.button37);
+        B47 = (TextView) findViewById(R.id.button47);
+        B57 = (TextView) findViewById(R.id.button57);
+        B67 = (TextView) findViewById(R.id.button67);
+        B77 = (TextView) findViewById(R.id.button77);
+        B87 = (TextView) findViewById(R.id.button87);
+        B97 = (TextView) findViewById(R.id.button97);
+        B08 = (TextView) findViewById(R.id.button08);
+        B18 = (TextView) findViewById(R.id.button18);
         B28 = (TextView) findViewById(R.id.button28);
+        B38 = (TextView) findViewById(R.id.button38);
+        B48 = (TextView) findViewById(R.id.button48);
+        B58 = (TextView) findViewById(R.id.button58);
+        B68 = (TextView) findViewById(R.id.button68);
+        B78 = (TextView) findViewById(R.id.button78);
+        B88 = (TextView) findViewById(R.id.button88);
+        B98 = (TextView) findViewById(R.id.button98);
+        B09 = (TextView) findViewById(R.id.button09);
+        B19 = (TextView) findViewById(R.id.button19);
+        B29 = (TextView) findViewById(R.id.button29);
+        B39 = (TextView) findViewById(R.id.button39);
+        B49 = (TextView) findViewById(R.id.button49);
+        B59 = (TextView) findViewById(R.id.button59);
+        B69 = (TextView) findViewById(R.id.button69);
+        B79 = (TextView) findViewById(R.id.button79);
+        B89 = (TextView) findViewById(R.id.button89);
+        B99 = (TextView) findViewById(R.id.button99);
 
         placeShips = (Button) findViewById(R.id.place_ships);
         ready = (Button) findViewById(R.id.ready);
 
         placeShips.setOnClickListener(new View.OnClickListener() {
-          @Override
+            @Override
             public void onClick(View v) {
                 putShips();
-              ready.setVisibility(View.VISIBLE);
+                ready.setVisibility(View.VISIBLE);
             }
         }) ;
 
         ready.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), GameActivity.class );
+                Intent i = new Intent(getApplicationContext(), Game_Activity.class );
                 startActivity(i);
-
-
-
-
             }
         });
 
@@ -126,6 +292,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
 
 
 
+        linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         // gridLayout = (GridLayout) findViewById(R.id.gridLayout8);
 
 
@@ -183,6 +350,38 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
     };
 
 
+    View.OnDragListener dragListener = new View.OnDragListener() {
+        @Override
+        public boolean onDrag(View v, DragEvent event) {
+            final View view = (View) event.getLocalState();
+
+            int dragEvent = event.getAction();
+            switch (dragEvent) {
+                case DragEvent.ACTION_DRAG_ENTERED:
+
+                    break;
+                case DragEvent.ACTION_DROP:
+                    if (view.getId() == R.id.ship1r) {
+
+                        //Log.d("tag", Float.toString(B1.getX()));
+                        //Log.d("tag", Float.toString(B2.getY()));
+                        Drawable x = ship1r.getDrawable();
+
+                        gridLayout.setBackground(x);
+                    }
+                    //view.animate()
+                    //      .x(B1.getX() )
+                    // .y(B1.getY() )
+                    //.start();
+
+
+                    break;
+
+            }
+            return true;
+
+        }
+    };
 
 
     public void ready(View view) {
@@ -258,7 +457,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
 
 
         }
-                return true;
+        return true;
 
 
 
@@ -269,9 +468,103 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
 
 
     public void putShips(){
-     //Coluna2 - ship1r
+        //Coluna2 - ship1r
+        String[][] positions = new String[][]{
+                {"1","Ship1","11 21"},
+                {"1","Ship2","22 32 42"},
+                {"1","Ship3","43 53 63 73"},
+                {"1","Ship4","66 76 86"},
+                {"1","Ship5","39 49"},
+                //{"2","Ship1","24 25"},
+                //{"2","Ship2","39 49 59"},
+                //{"2","Ship3","66 67 68 69"},
+                //{"2","Ship4","75 85 95"},
+                //{"2","Ship5","44 45"},
+        };
 
-        Drawable draw82;
+         TextView[][] buttons = {
+                {B00,B01,B02,B03,B04,B05,B06,B07,B08,B09,},
+                {B10,B11,B12,B13,B14,B15,B16,B17,B18,B19,},
+                {B20,B21,B22,B23,B24,B25,B26,B27,B28,B29,},
+                {B30,B31,B32,B33,B34,B35,B36,B37,B38,B39,},
+                {B40,B41,B42,B43,B44,B45,B46,B47,B48,B49,},
+                {B50,B51,B52,B53,B54,B55,B56,B57,B58,B59,},
+                {B60,B61,B62,B63,B64,B65,B66,B67,B68,B69,},
+                {B70,B71,B72,B73,B74,B75,B76,B77,B78,B79,},
+                {B80,B81,B82,B83,B84,B85,B86,B87,B88,B89,},
+                {B90,B91,B92,B93,B94,B95,B96,B97,B98,B99,}
+        };
+
+        Random rnd = new Random();
+        int boardposition =  rnd.nextInt(1) ;
+        ImageView ship;
+        TextView box;
+
+        Log.d("tag", "Random escolheu " + Integer.toString(boardposition));
+        for (int i = 0; i < 5; i++) {
+            Drawable draw;
+            BitmapDrawable drawable1;
+            Log.d("tag", "tou na linha " + Integer.toString(i));
+            Log.d("tag", "tou no barco " + positions[i][1]);
+            if (positions[i][1] == "Ship1"){
+                ship = ship1r;
+                drawable1 = (BitmapDrawable) ship1r.getDrawable();
+            } else if (positions[i][1] == "Ship2"){
+                ship = ship2r;
+                drawable1 = (BitmapDrawable) ship2r.getDrawable();
+            } else if (positions[i][1] == "Ship3"){
+                ship = ship3r;
+                drawable1 = (BitmapDrawable) ship3r.getDrawable();
+            } else if (positions[i][1] == "Ship4"){
+                ship = ship4r;
+                drawable1 = (BitmapDrawable) ship4r.getDrawable();
+            } else{
+                ship = ship5r;
+                drawable1 = (BitmapDrawable) ship5r.getDrawable();
+            };
+            Log.d("tag", "Ja assignei o barco ");
+            drawable1.setBounds(0,0,drawable1.getIntrinsicWidth(),drawable1.getIntrinsicHeight());
+            Bitmap bitmap1 = drawable1.getBitmap();
+            Bitmap scaledBitmap1 = Bitmap.createScaledBitmap(bitmap1, bitmap1.getWidth(), bitmap1.getHeight(), true);
+            String[] parts = positions[i][2].split(" ");
+            Log.d("tag", "Antes do explode " +positions[i][2]);
+            for (int j = 0; j < parts.length; j++){
+                Log.d("tag", "For dentro das parts");
+                if (j == 0) {
+                    Log.d("tag", "Dentro do 0 mas antes do drawable");
+                    draw = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight() / parts.length));
+                    Log.d("tag", "Dentro do 0 mas depois do drawable");
+                }else{
+                    Log.d("tag", "Dentro do geral mas antes do drawable");
+                    draw = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap1, 0, ((parts.length - 1) *bitmap1.getHeight()/parts.length ), bitmap1.getWidth(), bitmap1.getHeight()/parts.length) );
+                    Log.d("tag", "Dentro do geral mas depois do drawable");
+                }
+                Log.d("tag", "Primeira posição " + parts[j].charAt(0));
+                Log.d("tag", "Segunda posição " + parts[j].charAt(1));
+                for(int m = 0; m<10; m++){
+                    for(int n = 0; n<10; n++){
+
+                        Log.d("tag",""+ buttons[m][n].getText()+ "-" +m + n);
+                    }
+                }
+                box = buttons[Character.getNumericValue(parts[j].charAt(0))][Character.getNumericValue(parts[j].charAt(1))];
+                Log.d("tag", "Apos box? " + Integer.toString(box.getId()));
+                box.setBackground(draw);
+                box.setId(ship.getId());
+
+
+            }
+            //draw82 = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight()/2));
+            //draw92 = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap1, 0, bitmap1.getHeight()/2, bitmap1.getWidth(), bitmap1.getHeight()/2));
+
+            //B1.setBackground(draw82);
+            //B2.setBackground(draw92);
+
+            //B1.setId(ship1r.getId());
+            //B2.setId(ship1r.getId());
+
+        }
+        /*Drawable draw82;
         Drawable draw92;
 
         BitmapDrawable drawable1 = (BitmapDrawable) ship1r.getDrawable();
@@ -376,14 +669,13 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
 
         B28.setBackground(draw95);
         B38.setBackground(draw105);
-
+*/
 
 
     }
 
-    public void setGrid(){
-        glT.setVisibility( View.VISIBLE);
-    }
+
+
 
 
 

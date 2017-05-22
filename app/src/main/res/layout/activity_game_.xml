@@ -7,6 +7,7 @@
     tools:context="pt.iscte.batalhanaval.Game_Activity"
     android:dividerPadding="18dp"
     android:showDividers="beginning|middle|end"
+    android:background="@drawable/app_background"
 
     >
 

@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +17,6 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,7 +35,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText passTxt;
     private Button logBtn;
     private TextView registerTv;
-    private Button cheatBtn;
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
     private LoginButton loginFB;
@@ -58,8 +55,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         usernameTxt = (EditText) findViewById(R.id.rgUsernameTxt);
         passTxt = (EditText) findViewById(R.id.passwordTxt);
         logBtn = (Button) findViewById(R.id.loginBtn);
-        registerTv = (TextView) findViewById(R.id.registTv);
-        cheatBtn = (Button) findViewById(R.id.cheat);
+        registerTv = (TextView) findViewById(R.id.regButton);
         progressDialog = new ProgressDialog(this);
 
 
@@ -71,13 +67,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        cheatBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent registerIntent = new Intent(LoginActivity.this, Game_Activity.class);
-                LoginActivity.this.startActivity(registerIntent);
-            }
-        });
         logBtn.setOnClickListener(this);
 
         callbackManager = CallbackManager.Factory.create();
