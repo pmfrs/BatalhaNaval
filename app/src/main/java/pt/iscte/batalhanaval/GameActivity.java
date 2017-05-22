@@ -41,7 +41,6 @@ private TextView B00p;
         putShipsP2();
        // player2.addShipsToGrid(1,0,s1);
 
-
         int childCount = glp.getChildCount();
         Log.d("child" , Integer.toString(childCount));
         for(int i =0; i<glp.getRowCount(); i++){
@@ -83,7 +82,9 @@ private TextView B00p;
     }
 
 
+    public void onBackPressed(){
 
+    }
 
 
     public void jog ( ){
@@ -119,7 +120,7 @@ private TextView B00p;
             PlaceShipsActivity p = new PlaceShipsActivity();
             glp.setVisibility(View.GONE);
 
-            p.setGrid();
+            //p.setGrid();
 
 
 

@@ -57,6 +57,10 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener{
 
     }
 
+    public void onBackPressed(){
+
+    }
+
     private void logOff() {
         if (firebaseAuth.getCurrentUser() != null) {
             firebaseAuth.signOut();

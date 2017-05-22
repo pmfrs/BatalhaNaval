@@ -54,7 +54,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         regBtn.setOnClickListener(this);
 
     }
+    public void onBackPressed(){
 
+    }
     @Override
     public void onClick(View v) {
       registerUser();

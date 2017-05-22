@@ -93,7 +93,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     }
+    public void onBackPressed(){
 
+    }
     private void handleFacebookAccessToken(AccessToken accessToken) {
         AuthCredential credential = FacebookAuthProvider.getCredential(accessToken.getToken());
         firebaseAuth.signInWithCredential(credential)
