@@ -21,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -273,7 +274,8 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), GameActivity.class );
-                i.putExtra("BOATS_DISPLAY",boatsDisplay);
+                String s = Integer.toString(boatsDisplay);
+                i.putExtra("BOATS_DISPLAY",s);
                 startActivity(i);
             }
         });
@@ -467,6 +469,8 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
         boatsDisplay =  rnd.nextInt(1) ;
         ImageView ship;
         TextView box;
+
+        //Toast.makeText(this,Integer.toString(boatsDisplay), Toast.LENGTH_SHORT).show();
 
         Log.d("tag", "Random escolheu " + Integer.toString(boatsDisplay));
         for (int i = 0; i < 5; i++) {
