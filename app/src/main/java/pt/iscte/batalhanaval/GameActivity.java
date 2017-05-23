@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 private GridLayout glp;
@@ -24,14 +25,24 @@ private TextView B00p;
     private Ship s3;
     private Ship s4;
     private Ship s5;
-    private PlaceShipsActivity p;
+
+    private int myBoatsDisplay = 99;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        String intentString = getIntent().getStringExtra("BOATS_DISPLAY");
+
+        try{
+            myBoatsDisplay = Integer.parseInt(intentString);}
+        catch (NumberFormatException e){
+            Toast.makeText(this,"An error occured.",Toast.LENGTH_SHORT).show();
+            Intent registerIntent = new Intent(GameActivity.this, Lobby.class);
+            GameActivity.this.startActivity(registerIntent);
+        }
+
         player2 = new Player("player2");
-        p = new PlaceShipsActivity();
 
         glp = (GridLayout) findViewById(R.id.glPrincipal);
         B00p = (TextView) findViewById(R.id.button00p);
@@ -41,7 +52,6 @@ private TextView B00p;
 
         putShipsP2();
        // player2.addShipsToGrid(1,0,s1);
-
 
         int childCount = glp.getChildCount();
         Log.d("child" , Integer.toString(childCount));
@@ -54,15 +64,6 @@ private TextView B00p;
         B10p.setOnClickListener(this);
         B20p.setOnClickListener(this);
         B04p.setOnClickListener(this);
-
-
-
-
-
-
-
-
-
     }
 
     public void putShipsP2 (){
@@ -84,7 +85,9 @@ private TextView B00p;
     }
 
 
+    public void onBackPressed(){
 
+    }
 
 
     public void jog ( ){
@@ -108,48 +111,29 @@ private TextView B00p;
             Log.d("Entrei no if", "IFFFF");
             Log.d(Integer.toString(v.getId()), Integer.toString(s2.getIdShip()));
             v.setBackgroundColor(Color.RED);
-        } else {
-            v.setBackgroundColor(Color.BLUE);
-            Log.d("Entrei no else", "Entrei no else");
-
-            int[] array = player2.chooseAttack();
-            int l = array[0];
-            int c = array[1];
-            changeGrid();
-
         }
+        else{
+        Log.d("Entrei no else", "Entrei no else");
+        v.setBackgroundColor(Color.BLUE);
+       // player2.activeUser("player2");
+            int [] array = player2.chooseAttack();
+            int l = array [0];
+            int c = array[1];
+
+            PlaceShipsActivity p = new PlaceShipsActivity();
+            glp.setVisibility(View.GONE);
+
+            //p.setGrid();
+
+
+
+
+
     }
-            // player2.activeUser("player2");
 
 
 
-            public void changeGrid() {
-                try {
-                    Thread.sleep(6000);
-                    findViewById(R.id.linearLL).setVisibility(View.GONE);
-                    findViewById(R.id.linearLp1).setVisibility(View.VISIBLE);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-
-
-
-
-           // findViewById(R.id.glTop).
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }
 
 
 }

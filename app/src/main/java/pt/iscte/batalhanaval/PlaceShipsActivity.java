@@ -21,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -141,6 +142,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
     private Button placeShips;
     private Button ready;
 
+    private int boatsDisplay = 99;
     // private Button t;
 
 
@@ -272,14 +274,11 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), GameActivity.class );
+                String s = Integer.toString(boatsDisplay);
+                i.putExtra("BOATS_DISPLAY",s);
                 startActivity(i);
             }
         });
-
-
-
-
-
 
         player1 = (Player) getIntent().getSerializableExtra("Player1");
         player2 = (Player) getIntent().getSerializableExtra("Player2");
@@ -300,36 +299,13 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
 
 
     //Buttons
-
-
-/*
-
-
-
-
-
-
-
-
-       // button9.setOnLongClickListener(longClickListener);
-
-
-
+/*      // button9.setOnLongClickListener(longClickListener);
       // gridLayout.addView(button8, 1);
        //gridLayout.addView(button9);
        //gridLayout.addView(button10);
 
        //gridLayout.setOnLongClickListener(longClickListener);
-
-
-
-
-
-    }
-
-
-
-*/
+    }*/
 
 
     View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
@@ -383,7 +359,9 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
         }
     };
 
+    public void onBackPressed(){
 
+    }
     public void ready(View view) {
 
         if (player1 == null || player2 == null) {
@@ -422,9 +400,9 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
 
 
         for (i = 0; i < ships.length; i++)
-
             if (view == findViewById(ships[i].viewID))
                 break;
+
         Log.d("Aqui ", "passou o erro");
         player1.deleteShip(ships[i]);
         switch (event.getAction()) {
@@ -435,7 +413,6 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
                 y = view.getY() - event.getRawY();
                 moving = true;
                 break;
-
 
             case MotionEvent.ACTION_MOVE:
 
@@ -451,17 +428,10 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
                     findViewById(ships[i].viewID).setBackgroundResource(ships[i].imageID);
                     Log.d("action_move", "entrei no action move");
 
-
                     break;
                 }
-
-
         }
         return true;
-
-
-
-
     }
 
 
@@ -496,11 +466,13 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
         };
 
         Random rnd = new Random();
-        int boardposition =  rnd.nextInt(1) ;
+        boatsDisplay =  rnd.nextInt(1) ;
         ImageView ship;
         TextView box;
 
-        Log.d("tag", "Random escolheu " + Integer.toString(boardposition));
+        //Toast.makeText(this,Integer.toString(boatsDisplay), Toast.LENGTH_SHORT).show();
+
+        Log.d("tag", "Random escolheu " + Integer.toString(boatsDisplay));
         for (int i = 0; i < 5; i++) {
             Drawable draw;
             BitmapDrawable drawable1;
@@ -651,9 +623,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
         B65.setBackground(draw94);
         B75.setBackground(draw104);
 
-
         //Coluna 5 - ship5r
-
 
         Drawable draw95;
         Drawable draw105;
@@ -670,15 +640,6 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
         B28.setBackground(draw95);
         B38.setBackground(draw105);
 */
-
-
     }
-
-
-
-
-
-
-
 }
 

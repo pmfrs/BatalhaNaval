@@ -22,6 +22,10 @@ public class InstructionsActivity extends AppCompatActivity implements View.OnCl
         backBtn.setOnClickListener(this);
     }
 
+    public void onBackPressed(){
+
+    }
+
     public void onClick(View view){
         if(view == backBtn){
             Intent registerIntent = new Intent(InstructionsActivity.this, Lobby.class);
