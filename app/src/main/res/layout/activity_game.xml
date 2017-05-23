@@ -4,21 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="top"
+    android:layout_gravity="bottom"
     android:gravity="right"
     android:layout_marginLeft="20dp"
     android:background="@drawable/app_background"
     tools:context="pt.iscte.batalhanaval.GameActivity">
 
+
+    <LinearLayout
+        android:id="@+id/llTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+
     <GridLayout
-        android:id="@+id/glTop"
+        android:id="@+id/gl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="4"
         android:columnCount="10"
         android:rowCount="10"
         android:background="@color/cardview_dark_background"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="15dp"
+        >
+
 
     <TextView
         android:id="@+id/button00"
@@ -968,29 +978,30 @@
         />
 
     </GridLayout>
+    </LinearLayout>
 
 <LinearLayout
-    android:id="@+id/linearLL"
+    android:id="@+id/linearLp1"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     android:layout_gravity="bottom"
-    android:layout_marginRight="40dp">
+    android:layout_marginRight="40dp"
+    android:layout_marginBottom="100dp"
+    android:visibility="gone">
+
     <GridLayout
 
-        android:id="@+id/glPrincipal"
+        android:id="@+id/glP1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="4"
         android:columnCount="10"
         android:rowCount="10"
-        android:background="@color/cardview_dark_background"
-
-
-        >
+        android:background="@color/cardview_dark_background">
 
         <TextView
-            android:id="@+id/button00p"
+            android:id="@+id/button00p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="0"
@@ -1000,7 +1011,7 @@
             />
 
         <TextView
-            android:id="@+id/button10p"
+            android:id="@+id/button10p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="0"
@@ -1012,7 +1023,7 @@
             />
 
         <TextView
-            android:id="@+id/button20p"
+            android:id="@+id/button20p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="0"
@@ -1024,7 +1035,7 @@
             />
 
         <TextView
-            android:id="@+id/button30p"
+            android:id="@+id/button30p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="0"
@@ -1036,7 +1047,7 @@
             />
 
         <TextView
-            android:id="@+id/button40p"
+            android:id="@+id/button40p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="0"
@@ -1049,7 +1060,7 @@
 
 
         <TextView
-            android:id="@+id/button50p"
+            android:id="@+id/button50p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="0"
@@ -1060,7 +1071,7 @@
 
             />
         <TextView
-            android:id="@+id/button60p"
+            android:id="@+id/button60p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="0"
@@ -1071,7 +1082,7 @@
 
             />
         <TextView
-            android:id="@+id/button70p"
+            android:id="@+id/button70p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="0"
@@ -1082,7 +1093,7 @@
 
             />
         <TextView
-            android:id="@+id/button80p"
+            android:id="@+id/button80p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="0"
@@ -1093,7 +1104,7 @@
 
             />
         <TextView
-            android:id="@+id/button90p"
+            android:id="@+id/button90p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="0"
@@ -1105,7 +1116,7 @@
             />
 
         <TextView
-            android:id="@+id/button100p"
+            android:id="@+id/button100p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="1"
@@ -1117,7 +1128,7 @@
             />
 
         <TextView
-            android:id="@+id/button01p"
+            android:id="@+id/button01p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="1"
@@ -1129,7 +1140,7 @@
             />
 
         <TextView
-            android:id="@+id/button11p"
+            android:id="@+id/button11p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="1"
@@ -1138,7 +1149,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button21p"
+            android:id="@+id/button21p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="1"
@@ -1148,7 +1159,7 @@
             />
 
         <TextView
-            android:id="@+id/button31p"
+            android:id="@+id/button31p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="1"
@@ -1158,7 +1169,7 @@
             />
 
         <TextView
-            android:id="@+id/button41p"
+            android:id="@+id/button41p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="1"
@@ -1167,7 +1178,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button51p"
+            android:id="@+id/button51p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="1"
@@ -1177,7 +1188,7 @@
             />
 
         <TextView
-            android:id="@+id/button61p"
+            android:id="@+id/button61p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="1"
@@ -1187,7 +1198,7 @@
             />
 
         <TextView
-            android:id="@+id/button71p"
+            android:id="@+id/button71p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="1"
@@ -1197,7 +1208,7 @@
             />
 
         <TextView
-            android:id="@+id/button81p"
+            android:id="@+id/button81p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="1"
@@ -1206,7 +1217,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button02p"
+            android:id="@+id/button02p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="2"
@@ -1217,7 +1228,7 @@
 
 
         <TextView
-            android:id="@+id/button12p"
+            android:id="@+id/button12p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="2"
@@ -1226,7 +1237,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button22p"
+            android:id="@+id/button22p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="2"
@@ -1236,7 +1247,7 @@
             />
 
         <TextView
-            android:id="@+id/button32p"
+            android:id="@+id/button32p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="2"
@@ -1245,7 +1256,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button42p"
+            android:id="@+id/button42p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="2"
@@ -1255,7 +1266,7 @@
             />
 
         <TextView
-            android:id="@+id/button52p"
+            android:id="@+id/button52p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="2"
@@ -1264,7 +1275,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button62p"
+            android:id="@+id/button62p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="2"
@@ -1273,7 +1284,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button72p"
+            android:id="@+id/button72p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="2"
@@ -1282,7 +1293,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button82p"
+            android:id="@+id/button82p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="2"
@@ -1291,7 +1302,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button92p"
+            android:id="@+id/button92p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="2"
@@ -1301,7 +1312,7 @@
             />
 
         <TextView
-            android:id="@+id/button03p"
+            android:id="@+id/button03p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="3"
@@ -1311,7 +1322,7 @@
             />
 
         <TextView
-            android:id="@+id/button13p"
+            android:id="@+id/button13p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="3"
@@ -1320,7 +1331,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button23p"
+            android:id="@+id/button23p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="3"
@@ -1338,7 +1349,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button43p"
+            android:id="@+id/button43p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="3"
@@ -1347,7 +1358,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button53p"
+            android:id="@+id/button53p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="3"
@@ -1357,7 +1368,7 @@
             />
 
         <TextView
-            android:id="@+id/button63p"
+            android:id="@+id/button63p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="3"
@@ -1367,7 +1378,7 @@
             />
 
         <TextView
-            android:id="@+id/button73p"
+            android:id="@+id/button73p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="3"
@@ -1377,7 +1388,7 @@
             />
 
         <TextView
-            android:id="@+id/button83p"
+            android:id="@+id/button83p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="3"
@@ -1387,7 +1398,7 @@
             />
 
         <TextView
-            android:id="@+id/button93p"
+            android:id="@+id/button93p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="3"
@@ -1396,7 +1407,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button04p"
+            android:id="@+id/button04p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="4"
@@ -1405,7 +1416,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button14p"
+            android:id="@+id/button14p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="4"
@@ -1414,7 +1425,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button24p"
+            android:id="@+id/button24p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="4"
@@ -1423,7 +1434,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button34p"
+            android:id="@+id/button34p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="4"
@@ -1432,7 +1443,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button44p"
+            android:id="@+id/button44p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="4"
@@ -1441,7 +1452,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button54p"
+            android:id="@+id/button54p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="4"
@@ -1450,7 +1461,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button64p"
+            android:id="@+id/button64p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="4"
@@ -1459,7 +1470,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button74p"
+            android:id="@+id/button74p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="4"
@@ -1468,7 +1479,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button84p"
+            android:id="@+id/button84p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="4"
@@ -1477,7 +1488,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button94p"
+            android:id="@+id/button94p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="4"
@@ -1486,7 +1497,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button05p"
+            android:id="@+id/button05p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="5"
@@ -1495,7 +1506,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button15p"
+            android:id="@+id/button15p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="5"
@@ -1504,7 +1515,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button25p"
+            android:id="@+id/button25p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="5"
@@ -1513,7 +1524,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button35p"
+            android:id="@+id/button35p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="5"
@@ -1522,7 +1533,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button45p"
+            android:id="@+id/button45p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="5"
@@ -1531,7 +1542,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button55p"
+            android:id="@+id/button55p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="5"
@@ -1540,7 +1551,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button65p"
+            android:id="@+id/button65p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="5"
@@ -1549,7 +1560,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button75p"
+            android:id="@+id/button75p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="5"
@@ -1558,7 +1569,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button85p"
+            android:id="@+id/button85p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="5"
@@ -1567,7 +1578,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button95p"
+            android:id="@+id/button95p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="5"
@@ -1576,7 +1587,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button06p"
+            android:id="@+id/button06p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="6"
@@ -1585,7 +1596,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button16p"
+            android:id="@+id/button16p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="6"
@@ -1594,7 +1605,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button26p"
+            android:id="@+id/button26p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="6"
@@ -1603,7 +1614,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button36p"
+            android:id="@+id/button36p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="6"
@@ -1612,7 +1623,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button46p"
+            android:id="@+id/button46p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="6"
@@ -1621,7 +1632,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button56p"
+            android:id="@+id/button56p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="6"
@@ -1630,7 +1641,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button66p"
+            android:id="@+id/button66p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="6"
@@ -1639,7 +1650,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button76p"
+            android:id="@+id/button76p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="6"
@@ -1648,7 +1659,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button86p"
+            android:id="@+id/button86p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="6"
@@ -1657,7 +1668,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button96p"
+            android:id="@+id/button96p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="6"
@@ -1666,7 +1677,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button07p"
+            android:id="@+id/button07p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="7"
@@ -1675,7 +1686,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button17p"
+            android:id="@+id/button17p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="7"
@@ -1684,7 +1695,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button27p"
+            android:id="@+id/button27p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="7"
@@ -1693,7 +1704,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button37p"
+            android:id="@+id/button37p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="7"
@@ -1702,7 +1713,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button47p"
+            android:id="@+id/button47p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="7"
@@ -1711,7 +1722,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button57p"
+            android:id="@+id/button57p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="7"
@@ -1720,7 +1731,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button67p"
+            android:id="@+id/button67p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="7"
@@ -1729,7 +1740,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button77p"
+            android:id="@+id/button77p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="7"
@@ -1738,7 +1749,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button87p"
+            android:id="@+id/button87p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="7"
@@ -1747,7 +1758,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button97p"
+            android:id="@+id/button97p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="7"
@@ -1756,7 +1767,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button08p"
+            android:id="@+id/button08p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="8"
@@ -1765,7 +1776,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button18p"
+            android:id="@+id/button18p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="8"
@@ -1774,7 +1785,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button28p"
+            android:id="@+id/button28p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="8"
@@ -1783,7 +1794,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button38p"
+            android:id="@+id/button38p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="8"
@@ -1792,7 +1803,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button48p"
+            android:id="@+id/button48p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="8"
@@ -1810,7 +1821,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button68p"
+            android:id="@+id/button68p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="8"
@@ -1819,7 +1830,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button78p"
+            android:id="@+id/button78p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="8"
@@ -1828,7 +1839,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button88p"
+            android:id="@+id/button88p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="8"
@@ -1837,7 +1848,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button98p"
+            android:id="@+id/button98p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="8"
@@ -1846,7 +1857,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button09p"
+            android:id="@+id/button09p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="9"
@@ -1855,7 +1866,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button19p"
+            android:id="@+id/button19p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="9"
@@ -1864,7 +1875,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button29p"
+            android:id="@+id/button29p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="9"
@@ -1873,7 +1884,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button39p"
+            android:id="@+id/button39p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="9"
@@ -1882,7 +1893,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button49p"
+            android:id="@+id/button49p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="9"
@@ -1891,7 +1902,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button59p"
+            android:id="@+id/button59p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="9"
@@ -1900,7 +1911,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button69p"
+            android:id="@+id/button69p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="9"
@@ -1909,7 +1920,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button79p"
+            android:id="@+id/button79p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="9"
@@ -1918,7 +1929,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button89p"
+            android:id="@+id/button89p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="9"
@@ -1927,7 +1938,7 @@
             android:background="@drawable/shape_button"
             />
         <TextView
-            android:id="@+id/button99p"
+            android:id="@+id/button99p1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_column="9"
@@ -1939,5 +1950,976 @@
 
     </GridLayout>
 </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_gravity="bottom"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="100dp"
+        >
+
+        <GridLayout
+
+            android:id="@+id/glPrincipal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:columnCount="10"
+            android:rowCount="10"
+            android:background="@color/cardview_dark_background">
+
+            <TextView
+                android:id="@+id/button00p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="0"
+                android:layout_row="0"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+
+            <TextView
+                android:id="@+id/button10p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="0"
+                android:layout_row="1"
+                android:text=""
+                android:background="@drawable/shape_button"
+
+
+                />
+
+            <TextView
+                android:id="@+id/button20p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="0"
+                android:layout_row="2"
+                android:text=""
+                android:background="@drawable/shape_button"
+
+
+                />
+
+            <TextView
+                android:id="@+id/button30p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="0"
+                android:layout_row="3"
+                android:text=""
+                android:background="@drawable/shape_button"
+
+
+                />
+
+            <TextView
+                android:id="@+id/button40p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="0"
+                android:layout_row="4"
+                android:text=""
+                android:background="@drawable/shape_button"
+
+
+                />
+
+
+            <TextView
+                android:id="@+id/button50p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="0"
+                android:layout_row="5"
+                android:text=""
+                android:background="@drawable/shape_button"
+
+
+                />
+            <TextView
+                android:id="@+id/button60p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="0"
+                android:layout_row="6"
+                android:text=""
+                android:background="@drawable/shape_button"
+
+
+                />
+            <TextView
+                android:id="@+id/button70p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="0"
+                android:layout_row="7"
+                android:text=""
+                android:background="@drawable/shape_button"
+
+
+                />
+            <TextView
+                android:id="@+id/button80p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="0"
+                android:layout_row="8"
+                android:text=""
+                android:background="@drawable/shape_button"
+
+
+                />
+            <TextView
+                android:id="@+id/button90p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="0"
+                android:layout_row="9"
+                android:text=""
+                android:background="@drawable/shape_button"
+
+
+                />
+
+            <TextView
+                android:id="@+id/button100p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="1"
+                android:layout_row="0"
+                android:text=""
+                android:background="@drawable/shape_button"
+
+
+                />
+
+            <TextView
+                android:id="@+id/button01p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="1"
+                android:layout_row="1"
+                android:text=""
+                android:background="@drawable/shape_button"
+
+
+                />
+
+            <TextView
+                android:id="@+id/button11p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="1"
+                android:layout_row="2"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button21p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="1"
+                android:layout_row="3"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+
+            <TextView
+                android:id="@+id/button31p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="1"
+                android:layout_row="4"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+
+            <TextView
+                android:id="@+id/button41p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="1"
+                android:layout_row="5"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button51p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="1"
+                android:layout_row="6"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+
+            <TextView
+                android:id="@+id/button61p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="1"
+                android:layout_row="7"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+
+            <TextView
+                android:id="@+id/button71p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="1"
+                android:layout_row="8"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+
+            <TextView
+                android:id="@+id/button81p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="1"
+                android:layout_row="9"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button02p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="2"
+                android:layout_row="0"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+
+
+            <TextView
+                android:id="@+id/button12p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="2"
+                android:layout_row="1"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button22p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="2"
+                android:layout_row="2"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+
+            <TextView
+                android:id="@+id/button32p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="2"
+                android:layout_row="3"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button42p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="2"
+                android:layout_row="4"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+
+            <TextView
+                android:id="@+id/button52p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="2"
+                android:layout_row="5"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button62p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="2"
+                android:layout_row="6"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button72p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="2"
+                android:layout_row="7"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button82p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="2"
+                android:layout_row="8"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button92p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="2"
+                android:layout_row="9"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+
+            <TextView
+                android:id="@+id/button03p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="3"
+                android:layout_row="0"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+
+            <TextView
+                android:id="@+id/button13p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="3"
+                android:layout_row="1"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button23p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="3"
+                android:layout_row="2"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button33p1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="3"
+                android:layout_row="3"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button43p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="3"
+                android:layout_row="4"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button53p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="3"
+                android:layout_row="5"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+
+            <TextView
+                android:id="@+id/button63p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="3"
+                android:layout_row="6"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+
+            <TextView
+                android:id="@+id/button73p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="3"
+                android:layout_row="7"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+
+            <TextView
+                android:id="@+id/button83p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="3"
+                android:layout_row="8"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+
+            <TextView
+                android:id="@+id/button93p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="3"
+                android:layout_row="9"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button04p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="4"
+                android:layout_row="0"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button14p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="4"
+                android:layout_row="1"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button24p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="4"
+                android:layout_row="2"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button34p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="4"
+                android:layout_row="3"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button44p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="4"
+                android:layout_row="4"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button54p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="4"
+                android:layout_row="5"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button64p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="4"
+                android:layout_row="6"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button74p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="4"
+                android:layout_row="7"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button84p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="4"
+                android:layout_row="8"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button94p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="4"
+                android:layout_row="9"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button05p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="5"
+                android:layout_row="0"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button15p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="5"
+                android:layout_row="1"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button25p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="5"
+                android:layout_row="2"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button35p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="5"
+                android:layout_row="3"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button45p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="5"
+                android:layout_row="4"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button55p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="5"
+                android:layout_row="5"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button65p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="5"
+                android:layout_row="6"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button75p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="5"
+                android:layout_row="7"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button85p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="5"
+                android:layout_row="8"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button95p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="5"
+                android:layout_row="9"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button06p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="6"
+                android:layout_row="0"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button16p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="6"
+                android:layout_row="1"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button26p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="6"
+                android:layout_row="2"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button36p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="6"
+                android:layout_row="3"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button46p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="6"
+                android:layout_row="4"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button56p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="6"
+                android:layout_row="5"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button66p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="6"
+                android:layout_row="6"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button76p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="6"
+                android:layout_row="7"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button86p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="6"
+                android:layout_row="8"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button96p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="6"
+                android:layout_row="9"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button07p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="7"
+                android:layout_row="0"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button17p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="7"
+                android:layout_row="1"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button27p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="7"
+                android:layout_row="2"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button37p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="7"
+                android:layout_row="3"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button47p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="7"
+                android:layout_row="4"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button57p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="7"
+                android:layout_row="5"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button67p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="7"
+                android:layout_row="6"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button77p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="7"
+                android:layout_row="7"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button87p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="7"
+                android:layout_row="8"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button97p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="7"
+                android:layout_row="9"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button08p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="8"
+                android:layout_row="0"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button18p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="8"
+                android:layout_row="1"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button28p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="8"
+                android:layout_row="2"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button38p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="8"
+                android:layout_row="3"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button48p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="8"
+                android:layout_row="4"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button58p1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="8"
+                android:layout_row="5"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button68p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="8"
+                android:layout_row="6"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button78p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="8"
+                android:layout_row="7"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button88p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="8"
+                android:layout_row="8"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button98p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="8"
+                android:layout_row="9"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button09p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="9"
+                android:layout_row="0"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button19p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="9"
+                android:layout_row="1"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button29p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="9"
+                android:layout_row="2"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button39p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="9"
+                android:layout_row="3"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button49p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="9"
+                android:layout_row="4"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button59p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="9"
+                android:layout_row="5"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button69p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="9"
+                android:layout_row="6"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button79p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="9"
+                android:layout_row="7"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button89p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="9"
+                android:layout_row="8"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+            <TextView
+                android:id="@+id/button99p"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="9"
+                android:layout_row="9"
+                android:text=""
+                android:background="@drawable/shape_button"
+                />
+
+
+        </GridLayout>
+    </LinearLayout>
 
 </LinearLayout>

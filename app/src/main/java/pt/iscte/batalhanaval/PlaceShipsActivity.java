@@ -271,7 +271,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
         ready.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), Game_Activity.class );
+                Intent i = new Intent(getApplicationContext(), GameActivity.class );
                 startActivity(i);
             }
         });
