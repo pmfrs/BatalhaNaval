@@ -3,8 +3,11 @@ package pt.iscte.batalhanaval;
 import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.RotateDrawable;
 import android.media.Image;
 import android.os.Build;
 import android.support.v7.app.ActionBar;
@@ -29,11 +32,14 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static pt.iscte.batalhanaval.R.drawable.shape_button;
+
 public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouchListener {
     private LinearLayout linearLayout;
     private GridLayout gridLayout;
 
     private ImageView ship3r, ship2r, ship1r, ship4r, ship5r;
+    private Drawable shapeButton;
     private Ship s1, s2, s3, s4, s5;
     private Ship[] ships = new Ship[5];
     private Player player1, player2;
@@ -158,6 +164,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
         ship4r = (ImageView) findViewById(R.id.ship4r);
         ship5r = (ImageView) findViewById(R.id.ship5r);
 
+
         B00 = (TextView) findViewById(R.id.button00);
         B10 = (TextView) findViewById(R.id.button10);
         B20 = (TextView) findViewById(R.id.button20);
@@ -258,7 +265,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
         B79 = (TextView) findViewById(R.id.button79);
         B89 = (TextView) findViewById(R.id.button89);
         B99 = (TextView) findViewById(R.id.button99);
-
+        shapeButton = B00.getBackground();
         placeShips = (Button) findViewById(R.id.place_ships);
         ready = (Button) findViewById(R.id.ready);
 
@@ -435,22 +442,39 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
     }
 
 
+private void resetShips(TextView[][] buttons) {
+    Log.d("s", "Entrei no reset");
+
+    for(int i = 0; i<10 ; i++){
+        for(int j = 0 ; j<10; j++){
+            Log.d("Reset", "i " + i);
+
+            Log.d("Reset", "j " + j);
+          buttons[i][j].setBackground(shapeButton);
+        }
+    }
+
+}
 
 
     public void putShips(){
-        //Coluna2 - ship1r
-        String[][] positions = new String[][]{
-                {"1","Ship1","11 21"},
-                {"1","Ship2","22 32 42"},
-                {"1","Ship3","43 53 63 73"},
-                {"1","Ship4","66 76 86"},
-                {"1","Ship5","39 49"},
-                //{"2","Ship1","24 25"},
-                //{"2","Ship2","39 49 59"},
-                //{"2","Ship3","66 67 68 69"},
-                //{"2","Ship4","75 85 95"},
-                //{"2","Ship5","44 45"},
+
+        int counter = 0;
+
+                String[][] positions = new String[][]{
+                {"1","Ship1","11 21",""},
+                {"1","Ship2","22 32 42",""},
+                {"1","Ship3","43 53 63 73",""},
+                {"1","Ship4","66 76 86",""},
+                {"1","Ship5","39 49",""},
+                {"2","Ship1","24 25","R"},
+                {"2","Ship2","39 49 59",""},
+                {"2","Ship3","66 67 68 69","R"},
+                {"2","Ship4","75 85 95",""},
+                {"2","Ship5","44 45","R"},
         };
+
+        String[][] finalPositions = new String[5][3];
 
          TextView[][] buttons = {
                 {B00,B01,B02,B03,B04,B05,B06,B07,B08,B09,},
@@ -464,76 +488,79 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
                 {B80,B81,B82,B83,B84,B85,B86,B87,B88,B89,},
                 {B90,B91,B92,B93,B94,B95,B96,B97,B98,B99,}
         };
-
+        Matrix matrix = new Matrix();
+        matrix.postRotate(-90);
         Random rnd = new Random();
-        boatsDisplay =  rnd.nextInt(1) ;
+        boatsDisplay =  rnd.nextInt((2 - 1) + 1) + 1;
         ImageView ship;
         TextView box;
-
-        //Toast.makeText(this,Integer.toString(boatsDisplay), Toast.LENGTH_SHORT).show();
-
+        resetShips(buttons);
         Log.d("tag", "Random escolheu " + Integer.toString(boatsDisplay));
+        for(i=0 ; i<10 ; i++){
+
+            if(positions[i][0].equals(Integer.toString(boatsDisplay))){
+
+                finalPositions[counter][0]=positions[i][1];
+                finalPositions[counter][1]=positions[i][2];
+                finalPositions[counter][2]=positions[i][3];
+                counter++;
+            }
+        }
+
         for (int i = 0; i < 5; i++) {
             Drawable draw;
             BitmapDrawable drawable1;
-            Log.d("tag", "tou na linha " + Integer.toString(i));
-            Log.d("tag", "tou no barco " + positions[i][1]);
-            if (positions[i][1] == "Ship1"){
+
+            if (finalPositions[i][0] == "Ship1"){
                 ship = ship1r;
                 drawable1 = (BitmapDrawable) ship1r.getDrawable();
-            } else if (positions[i][1] == "Ship2"){
+            } else if (finalPositions[i][0] == "Ship2"){
                 ship = ship2r;
                 drawable1 = (BitmapDrawable) ship2r.getDrawable();
-            } else if (positions[i][1] == "Ship3"){
+            } else if (finalPositions[i][0] == "Ship3"){
                 ship = ship3r;
                 drawable1 = (BitmapDrawable) ship3r.getDrawable();
-            } else if (positions[i][1] == "Ship4"){
+            } else if (finalPositions[i][0] == "Ship4"){
                 ship = ship4r;
                 drawable1 = (BitmapDrawable) ship4r.getDrawable();
             } else{
                 ship = ship5r;
                 drawable1 = (BitmapDrawable) ship5r.getDrawable();
             };
-            Log.d("tag", "Ja assignei o barco ");
+
             drawable1.setBounds(0,0,drawable1.getIntrinsicWidth(),drawable1.getIntrinsicHeight());
             Bitmap bitmap1 = drawable1.getBitmap();
             Bitmap scaledBitmap1 = Bitmap.createScaledBitmap(bitmap1, bitmap1.getWidth(), bitmap1.getHeight(), true);
-            String[] parts = positions[i][2].split(" ");
-            Log.d("tag", "Antes do explode " +positions[i][2]);
+            String[] parts = finalPositions[i][1].split(" ");
+
             for (int j = 0; j < parts.length; j++){
                 Log.d("tag", "For dentro das parts");
                 if (j == 0) {
-                    Log.d("tag", "Dentro do 0 mas antes do drawable");
-                    draw = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight() / parts.length));
-                    Log.d("tag", "Dentro do 0 mas depois do drawable");
-                }else{
-                    Log.d("tag", "Dentro do geral mas antes do drawable");
-                    draw = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap1, 0, ((parts.length - 1) *bitmap1.getHeight()/parts.length ), bitmap1.getWidth(), bitmap1.getHeight()/parts.length) );
-                    Log.d("tag", "Dentro do geral mas depois do drawable");
-                }
-                Log.d("tag", "Primeira posição " + parts[j].charAt(0));
-                Log.d("tag", "Segunda posição " + parts[j].charAt(1));
-                for(int m = 0; m<10; m++){
-                    for(int n = 0; n<10; n++){
+                    if (finalPositions[i][2].equals("R")){
+                        draw = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight() / parts.length, matrix,true));
 
-                        Log.d("tag",""+ buttons[m][n].getText()+ "-" +m + n);
+                    }else {
+                        draw = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight() / parts.length));
+                    }
+                }else{
+
+                    //draw = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap1, 0, ((parts.length - 1) *bitmap1.getHeight()/parts.length ), bitmap1.getWidth(), bitmap1.getHeight()/parts.length) );
+                    if (finalPositions[i][2].equals("R")) {
+                        draw = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap1, 0, (j * bitmap1.getHeight() / parts.length), bitmap1.getWidth(), bitmap1.getHeight() / parts.length, matrix,true));
+                    }else{
+                        draw = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap1, 0, (j * bitmap1.getHeight() / parts.length), bitmap1.getWidth(), bitmap1.getHeight() / parts.length));
+
                     }
                 }
+
+
                 box = buttons[Character.getNumericValue(parts[j].charAt(0))][Character.getNumericValue(parts[j].charAt(1))];
-                Log.d("tag", "Apos box? " + Integer.toString(box.getId()));
+
                 box.setBackground(draw);
                 box.setId(ship.getId());
 
 
             }
-            //draw82 = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight()/2));
-            //draw92 = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap1, 0, bitmap1.getHeight()/2, bitmap1.getWidth(), bitmap1.getHeight()/2));
-
-            //B1.setBackground(draw82);
-            //B2.setBackground(draw92);
-
-            //B1.setId(ship1r.getId());
-            //B2.setId(ship1r.getId());
 
         }
         /*Drawable draw82;
@@ -640,6 +667,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
         B28.setBackground(draw95);
         B38.setBackground(draw105);
 */
+
     }
 }
 
