@@ -460,6 +460,7 @@ private void resetShips(TextView[][] buttons) {
     public void putShips(){
 
         int counter = 0;
+        int randomPlay;
 
                 String[][] positions = new String[][]{
                 {"1","Ship1","11 21",""},
@@ -472,6 +473,21 @@ private void resetShips(TextView[][] buttons) {
                 {"2","Ship3","66 67 68 69","R"},
                 {"2","Ship4","75 85 95",""},
                 {"2","Ship5","44 45","R"},
+                {"3","Ship1","08 09","R"},
+                {"3","Ship2","22 32 42",""},
+                {"3","Ship3","35 36 37 38","R"},
+                {"3","Ship4","61 62 63","R"},
+                {"3","Ship5","26 27","R"},
+                {"4","Ship1","00 10",""},
+                {"4","Ship2","13 14 15","R"},
+                {"4","Ship3","27 37 47 57",""},
+                {"4","Ship4","32 42 52",""},
+                {"4","Ship5","64 65","R"},
+                {"5","Ship1","14 24",""},
+                {"5","Ship2","36 46 56",""},
+                {"5","Ship3","32 42 52 62",""},
+                {"5","Ship4","76 77 78","R"},
+                {"5","Ship5","74 84",""},
         };
 
         String[][] finalPositions = new String[5][3];
@@ -491,12 +507,17 @@ private void resetShips(TextView[][] buttons) {
         Matrix matrix = new Matrix();
         matrix.postRotate(-90);
         Random rnd = new Random();
-        boatsDisplay =  rnd.nextInt((2 - 1) + 1) + 1;
+        do {
+
+            randomPlay =  rnd.nextInt((5 - 1) + 1) + 1;
+
+        }while(randomPlay == boatsDisplay);
+        boatsDisplay = randomPlay;
         ImageView ship;
         TextView box;
         resetShips(buttons);
-        Log.d("tag", "Random escolheu " + Integer.toString(boatsDisplay));
-        for(i=0 ; i<10 ; i++){
+
+        for(i=0 ; i<25 ; i++){
 
             if(positions[i][0].equals(Integer.toString(boatsDisplay))){
 
@@ -534,7 +555,6 @@ private void resetShips(TextView[][] buttons) {
             String[] parts = finalPositions[i][1].split(" ");
 
             for (int j = 0; j < parts.length; j++){
-                Log.d("tag", "For dentro das parts");
                 if (j == 0) {
                     if (finalPositions[i][2].equals("R")){
                         draw = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight() / parts.length, matrix,true));
@@ -563,110 +583,6 @@ private void resetShips(TextView[][] buttons) {
             }
 
         }
-        /*Drawable draw82;
-        Drawable draw92;
-
-        BitmapDrawable drawable1 = (BitmapDrawable) ship1r.getDrawable();
-        drawable1.setBounds(0,0,drawable1.getIntrinsicWidth(),drawable1.getIntrinsicHeight());
-        Bitmap bitmap1 = drawable1.getBitmap();
-        Bitmap scaledBitmap1 = Bitmap.createScaledBitmap(bitmap1, bitmap1.getWidth(), bitmap1.getHeight(), true);
-
-        draw82 = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight()/2));
-        draw92 = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap1, 0, bitmap1.getHeight()/2, bitmap1.getWidth(), bitmap1.getHeight()/2));
-
-        B1.setBackground(draw82);
-        B2.setBackground(draw92);
-
-        B1.setId(ship1r.getId());
-        B2.setId(ship1r.getId());
-
-        //player1.addShipsToGrid(0,0, s1);
-        //player1.addShipsToGrid(1,0, s1);
-
-        //ship3r - Coluna 2
-        Drawable draw81;
-        Drawable draw91;
-        Drawable draw11;
-
-        BitmapDrawable drawable = (BitmapDrawable) ship3r.getDrawable();
-        drawable.setBounds(0,0,drawable.getIntrinsicWidth(),drawable.getIntrinsicHeight());
-        Bitmap bitmap = drawable.getBitmap();
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth(), bitmap.getHeight(), true);
-
-        draw81 = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight()/3));
-        draw91 = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap, 0, bitmap.getHeight()/3 , bitmap.getWidth(), bitmap.getHeight()/3) );
-        draw11 = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap, 0,(2*bitmap.getHeight()/3), bitmap.getWidth(), bitmap.getHeight()/3) );
-
-        B01.setBackground(draw81);
-        B11.setBackground(draw91);
-        B21.setBackground(draw11);
-
-        B01.setId(ship3r.getId());
-        B11.setId(ship3r.getId());
-        B21.setId(ship3r.getId());
-
-
-        //Coluna 3 - ship2r
-        Drawable draw73;
-        Drawable draw83;
-        Drawable draw93;
-        Drawable draw103;
-
-        Bitmap[] x3 = new Bitmap[3];
-        BitmapDrawable drawable2 = (BitmapDrawable) ship2r.getDrawable();
-        drawable2.setBounds(0,0,drawable2.getIntrinsicWidth(),drawable2.getIntrinsicHeight());
-        Bitmap bitmap2 = drawable2.getBitmap();
-        Bitmap scaledBitmap2 = Bitmap.createScaledBitmap(bitmap2, bitmap2.getWidth(), bitmap2.getHeight(), true);
-
-
-        draw73 = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap2, 0, 0, bitmap2.getWidth(), bitmap2.getHeight()/4));
-        draw83 = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap2, 0, bitmap2.getHeight()/4, bitmap2.getWidth(), bitmap2.getHeight()/4));
-        draw93 = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap2, 0, 2*bitmap2.getHeight()/4, bitmap2.getWidth(), bitmap2.getHeight()/4));
-        draw103 = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap2, 0, 3*bitmap2.getHeight()/4, bitmap2.getWidth(), bitmap2.getHeight()/4));
-
-
-        B42.setBackground(draw73);
-        B52.setBackground(draw83);
-        B62.setBackground(draw93);
-        B72.setBackground(draw103);
-
-
-        //Coluna 4 - ship4r
-
-        Drawable draw84;
-        Drawable draw94;
-        Drawable draw104;
-
-        BitmapDrawable drawable3 = (BitmapDrawable) ship4r.getDrawable();
-        drawable3.setBounds(0,0,drawable3.getIntrinsicWidth(),drawable3.getIntrinsicHeight());
-        Bitmap bitmap3 = drawable3.getBitmap();
-        Bitmap scaledBitmap3 = Bitmap.createScaledBitmap(bitmap3, bitmap3.getWidth(), bitmap3.getHeight(), true);
-
-        draw84 = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap3, 0, 0, bitmap3.getWidth(), bitmap3.getHeight()/3));
-        draw94 = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap3, 0, bitmap3.getHeight()/3, bitmap3.getWidth(), bitmap3.getHeight()/3));
-        draw104 = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap3, 0, 2*bitmap3.getHeight()/3, bitmap3.getWidth(), bitmap3.getHeight()/3));
-
-        B55.setBackground(draw84);
-        B65.setBackground(draw94);
-        B75.setBackground(draw104);
-
-        //Coluna 5 - ship5r
-
-        Drawable draw95;
-        Drawable draw105;
-
-        BitmapDrawable drawable4 = (BitmapDrawable) ship5r.getDrawable();
-        drawable4.setBounds(0,0,drawable4.getIntrinsicWidth(),drawable4.getIntrinsicHeight());
-        Bitmap bitmap4 = drawable4.getBitmap();
-        Bitmap scaledBitmap4 = Bitmap.createScaledBitmap(bitmap4, bitmap4.getWidth(), bitmap4.getHeight(), true);
-
-
-        draw95 = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap4, 0, 0, bitmap4.getWidth(), bitmap4.getHeight()/2));
-        draw105 = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap4, 0, bitmap4.getHeight()/2, bitmap4.getWidth(), bitmap4.getHeight()/2));
-
-        B28.setBackground(draw95);
-        B38.setBackground(draw105);
-*/
 
     }
 }
