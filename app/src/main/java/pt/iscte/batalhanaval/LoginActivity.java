@@ -78,8 +78,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
               handleFacebookAccessToken(loginResult.getAccessToken());
             }
 
-
-
             @Override
             public void onCancel() {
 

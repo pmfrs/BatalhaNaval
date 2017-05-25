@@ -140,7 +140,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public void onBackPressed() {
-
+        Intent registerIntent = new Intent(GameActivity.this, Lobby.class);
+        GameActivity.this.startActivity(registerIntent);
     }
 
 

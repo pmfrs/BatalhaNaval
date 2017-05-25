@@ -23,7 +23,8 @@ public class InstructionsActivity extends AppCompatActivity implements View.OnCl
     }
 
     public void onBackPressed(){
-
+        Intent registerIntent = new Intent(InstructionsActivity.this, Lobby.class);
+        InstructionsActivity.this.startActivity(registerIntent);
     }
 
     public void onClick(View view){

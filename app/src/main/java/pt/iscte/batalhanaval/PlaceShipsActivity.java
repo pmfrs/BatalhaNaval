@@ -147,6 +147,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
 
     private Button placeShips;
     private Button ready;
+    private String multiplayer;
 
     private int boatsDisplay = 99;
     // private Button t;
@@ -157,6 +158,9 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        multiplayer = getIntent().getStringExtra("MULTIPLAYER");
+
         setContentView(R.layout.activity_place_ships);
         ship3r = (ImageView) findViewById(R.id.ship3r);
         ship1r = (ImageView) findViewById(R.id.ship1r);
@@ -269,6 +273,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
         placeShips = (Button) findViewById(R.id.place_ships);
         ready = (Button) findViewById(R.id.ready);
 
+
         placeShips.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -283,6 +288,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
                 Intent i = new Intent(getApplicationContext(), GameActivity.class );
                 String s = Integer.toString(boatsDisplay);
                 i.putExtra("BOATS_DISPLAY",s);
+                i.putExtra("MULTIPLAYER",multiplayer);
                 startActivity(i);
             }
         });
@@ -367,7 +373,8 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
     };
 
     public void onBackPressed(){
-
+        Intent registerIntent = new Intent(PlaceShipsActivity.this, Lobby.class);
+        PlaceShipsActivity.this.startActivity(registerIntent);
     }
     public void ready(View view) {
 

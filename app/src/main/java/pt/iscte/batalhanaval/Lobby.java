@@ -17,6 +17,7 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener{
     private Button singleplayerBtn;
     private Button multiplayerBtn;
     private Button instBtn;
+    private String multiplayer = "OFF";
 
     private FirebaseAuth firebaseAuth;
 
@@ -70,10 +71,13 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener{
     }
     private void singleGame(){
         Intent registerIntent = new Intent(Lobby.this, PlaceShipsActivity.class);
+        registerIntent.putExtra("MULTIPLAYER",multiplayer);
         Lobby.this.startActivity(registerIntent);
     }
     private void multiGame(){
+        multiplayer = "ON";
         Intent registerIntent = new Intent(Lobby.this, PlaceShipsActivity.class);
+        registerIntent.putExtra("MULTIPLAYER",multiplayer);
         Lobby.this.startActivity(registerIntent);
     }
     private void instructions(){

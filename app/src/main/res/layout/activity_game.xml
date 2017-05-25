@@ -978,7 +978,10 @@
         />
 
     </GridLayout>
+
+
     </LinearLayout>
+
 
 <LinearLayout
     android:id="@+id/linearLp1"
@@ -1012,7 +1015,7 @@
 
         <TextView
             android:id="@+id/button10p1"
-            android:layout_width="30dp"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_column="0"
             android:layout_row="1"
@@ -2921,5 +2924,7 @@
 
         </GridLayout>
     </LinearLayout>
+
+
 
 </LinearLayout>
