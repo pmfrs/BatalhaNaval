@@ -28,8 +28,10 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import static pt.iscte.batalhanaval.R.drawable.shape_button;
@@ -43,6 +45,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
     private Ship s1, s2, s3, s4, s5;
     private Ship[] ships = new Ship[5];
     private Player player1, player2;
+    public TextView[][] buttons;
     private TextView B00;
     private TextView B10;
     private TextView B20;
@@ -150,8 +153,6 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
 
     private int boatsDisplay = 99;
     // private Button t;
-
-
 
 
     @Override
@@ -275,14 +276,14 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
                 putShips();
                 ready.setVisibility(View.VISIBLE);
             }
-        }) ;
+        });
 
         ready.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), GameActivity.class );
+                Intent i = new Intent(getApplicationContext(), GameActivity.class);
                 String s = Integer.toString(boatsDisplay);
-                i.putExtra("BOATS_DISPLAY",s);
+                i.putExtra("BOATS_DISPLAY", s);
                 startActivity(i);
             }
         });
@@ -292,10 +293,6 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
 
         // ship1r.setOnTouchListener(this);
         //ship2r.setOnTouchListener(this);
-
-
-
-
 
 
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
@@ -366,9 +363,10 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
         }
     };
 
-    public void onBackPressed(){
+    public void onBackPressed() {
 
     }
+
     public void ready(View view) {
 
         if (player1 == null || player2 == null) {
@@ -442,67 +440,67 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
     }
 
 
-private void resetShips(TextView[][] buttons) {
-    Log.d("s", "Entrei no reset");
+    private void resetShips(TextView[][] buttons) {
+        Log.d("s", "Entrei no reset");
 
-    for(int i = 0; i<10 ; i++){
-        for(int j = 0 ; j<10; j++){
-            Log.d("Reset", "i " + i);
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                Log.d("Reset", "i " + i);
 
-            Log.d("Reset", "j " + j);
-          buttons[i][j].setBackground(shapeButton);
+                Log.d("Reset", "j " + j);
+                buttons[i][j].setBackground(shapeButton);
+            }
         }
+
     }
 
-}
 
-
-    public void putShips(){
+    public void putShips() {
 
         int counter = 0;
 
-                String[][] positions = new String[][]{
-                {"1","Ship1","11 21",""},
-                {"1","Ship2","22 32 42",""},
-                {"1","Ship3","43 53 63 73",""},
-                {"1","Ship4","66 76 86",""},
-                {"1","Ship5","39 49",""},
-                {"2","Ship1","24 25","R"},
-                {"2","Ship2","39 49 59",""},
-                {"2","Ship3","66 67 68 69","R"},
-                {"2","Ship4","75 85 95",""},
-                {"2","Ship5","44 45","R"},
+        String[][] positions = new String[][]{
+                {"1", "Ship1", "11 21", ""},
+                {"1", "Ship2", "22 32 42", ""},
+                {"1", "Ship3", "43 53 63 73", ""},
+                {"1", "Ship4", "66 76 86", ""},
+                {"1", "Ship5", "39 49", ""},
+                {"2", "Ship1", "24 25", "R"},
+                {"2", "Ship2", "39 49 59", ""},
+                {"2", "Ship3", "66 67 68 69", "R"},
+                {"2", "Ship4", "75 85 95", ""},
+                {"2", "Ship5", "44 45", "R"},
         };
 
         String[][] finalPositions = new String[5][3];
 
-         TextView[][] buttons = {
-                {B00,B01,B02,B03,B04,B05,B06,B07,B08,B09,},
-                {B10,B11,B12,B13,B14,B15,B16,B17,B18,B19,},
-                {B20,B21,B22,B23,B24,B25,B26,B27,B28,B29,},
-                {B30,B31,B32,B33,B34,B35,B36,B37,B38,B39,},
-                {B40,B41,B42,B43,B44,B45,B46,B47,B48,B49,},
-                {B50,B51,B52,B53,B54,B55,B56,B57,B58,B59,},
-                {B60,B61,B62,B63,B64,B65,B66,B67,B68,B69,},
-                {B70,B71,B72,B73,B74,B75,B76,B77,B78,B79,},
-                {B80,B81,B82,B83,B84,B85,B86,B87,B88,B89,},
-                {B90,B91,B92,B93,B94,B95,B96,B97,B98,B99,}
-        };
+         buttons = new TextView[][]{
+                 {B00, B01, B02, B03, B04, B05, B06, B07, B08, B09,},
+                 {B10, B11, B12, B13, B14, B15, B16, B17, B18, B19,},
+                 {B20, B21, B22, B23, B24, B25, B26, B27, B28, B29,},
+                 {B30, B31, B32, B33, B34, B35, B36, B37, B38, B39,},
+                 {B40, B41, B42, B43, B44, B45, B46, B47, B48, B49,},
+                 {B50, B51, B52, B53, B54, B55, B56, B57, B58, B59,},
+                 {B60, B61, B62, B63, B64, B65, B66, B67, B68, B69,},
+                 {B70, B71, B72, B73, B74, B75, B76, B77, B78, B79,},
+                 {B80, B81, B82, B83, B84, B85, B86, B87, B88, B89,},
+                 {B90, B91, B92, B93, B94, B95, B96, B97, B98, B99,}
+         };
         Matrix matrix = new Matrix();
         matrix.postRotate(-90);
         Random rnd = new Random();
-        boatsDisplay =  rnd.nextInt((2 - 1) + 1) + 1;
+        boatsDisplay = rnd.nextInt((2 - 1) + 1) + 1;
         ImageView ship;
         TextView box;
         resetShips(buttons);
         Log.d("tag", "Random escolheu " + Integer.toString(boatsDisplay));
-        for(i=0 ; i<10 ; i++){
+        for (i = 0; i < 10; i++) {
 
-            if(positions[i][0].equals(Integer.toString(boatsDisplay))){
+            if (positions[i][0].equals(Integer.toString(boatsDisplay))) {
 
-                finalPositions[counter][0]=positions[i][1];
-                finalPositions[counter][1]=positions[i][2];
-                finalPositions[counter][2]=positions[i][3];
+                finalPositions[counter][0] = positions[i][1];
+                finalPositions[counter][1] = positions[i][2];
+                finalPositions[counter][2] = positions[i][3];
                 counter++;
             }
         }
@@ -511,43 +509,44 @@ private void resetShips(TextView[][] buttons) {
             Drawable draw;
             BitmapDrawable drawable1;
 
-            if (finalPositions[i][0] == "Ship1"){
+            if (finalPositions[i][0] == "Ship1") {
                 ship = ship1r;
                 drawable1 = (BitmapDrawable) ship1r.getDrawable();
-            } else if (finalPositions[i][0] == "Ship2"){
+            } else if (finalPositions[i][0] == "Ship2") {
                 ship = ship2r;
                 drawable1 = (BitmapDrawable) ship2r.getDrawable();
-            } else if (finalPositions[i][0] == "Ship3"){
+            } else if (finalPositions[i][0] == "Ship3") {
                 ship = ship3r;
                 drawable1 = (BitmapDrawable) ship3r.getDrawable();
-            } else if (finalPositions[i][0] == "Ship4"){
+            } else if (finalPositions[i][0] == "Ship4") {
                 ship = ship4r;
                 drawable1 = (BitmapDrawable) ship4r.getDrawable();
-            } else{
+            } else {
                 ship = ship5r;
                 drawable1 = (BitmapDrawable) ship5r.getDrawable();
-            };
+            }
+            ;
 
-            drawable1.setBounds(0,0,drawable1.getIntrinsicWidth(),drawable1.getIntrinsicHeight());
+            drawable1.setBounds(0, 0, drawable1.getIntrinsicWidth(), drawable1.getIntrinsicHeight());
             Bitmap bitmap1 = drawable1.getBitmap();
             Bitmap scaledBitmap1 = Bitmap.createScaledBitmap(bitmap1, bitmap1.getWidth(), bitmap1.getHeight(), true);
             String[] parts = finalPositions[i][1].split(" ");
 
-            for (int j = 0; j < parts.length; j++){
+            for (int j = 0; j < parts.length; j++) {
                 Log.d("tag", "For dentro das parts");
                 if (j == 0) {
-                    if (finalPositions[i][2].equals("R")){
-                        draw = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight() / parts.length, matrix,true));
+                    if (finalPositions[i][2].equals("R")) {
+                        draw = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight() / parts.length, matrix, true));
 
-                    }else {
+                    } else {
                         draw = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight() / parts.length));
                     }
-                }else{
+                } else {
 
                     //draw = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap1, 0, ((parts.length - 1) *bitmap1.getHeight()/parts.length ), bitmap1.getWidth(), bitmap1.getHeight()/parts.length) );
                     if (finalPositions[i][2].equals("R")) {
-                        draw = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap1, 0, (j * bitmap1.getHeight() / parts.length), bitmap1.getWidth(), bitmap1.getHeight() / parts.length, matrix,true));
-                    }else{
+                        draw = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap1, 0, (j * bitmap1.getHeight() / parts.length), bitmap1.getWidth(), bitmap1.getHeight() / parts.length, matrix, true));
+                    } else {
                         draw = new BitmapDrawable(getResources(), Bitmap.createBitmap(scaledBitmap1, 0, (j * bitmap1.getHeight() / parts.length), bitmap1.getWidth(), bitmap1.getHeight() / parts.length));
 
                     }
@@ -559,10 +558,21 @@ private void resetShips(TextView[][] buttons) {
                 box.setBackground(draw);
                 box.setId(ship.getId());
 
+                //Integer.toString(box.getId()));
+
+
 
             }
 
         }
+    }
+    public TextView[][] getButtons(){
+        return buttons;
+
+    }
+
+
+
         /*Drawable draw82;
         Drawable draw92;
 
@@ -668,6 +678,6 @@ private void resetShips(TextView[][] buttons) {
         B38.setBackground(draw105);
 */
 
-    }
+
 }
 
