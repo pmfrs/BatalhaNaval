@@ -9,4 +9,13 @@
         tabuleiro onde:\n\n(1) No ínicio do jogo escolhe, de entre os cenários possíveis a sua distribuição preferida.\n\n(2)Durante o jogo deve indicar três posições para atacar, recebendo informação
         acerca do sucesso ou insucesso do ataque.\n\n(3) Ao fim de três tiros é a vez do outro jogador.\n\nBom jogo!</string>
     <string name="placeShips">Coloque os seus navios, existem várias opções.</string>
+
+    <!--  DeviceListActivity -->
+    <string name="scanning">scanning for devices...</string>
+    <string name="select_device">Select a device to connect</string>
+    <string name="none_paired">No devices have been paired</string>
+    <string name="none_found">No devices found</string>
+    <string name="title_paired_devices">Paired Devices</string>
+    <string name="title_other_devices">Other Available Devices</string>
+    <string name="button_scan">Scan for devices</string>
 </resources>
