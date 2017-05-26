@@ -1,6 +1,7 @@
 package pt.iscte.batalhanaval;
 
 import android.view.View;
+import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.Random;
@@ -10,6 +11,91 @@ import java.util.Random;
  */
 
 public class Player implements Serializable {
+    private boolean myTurn;
+    private String playerName;
+    private int[] myPlays;
+    private int[] myBoats;
+
+    private int[][] defaultBoats;
+
+    public Ship[] ships;
+    private int [][] board;
+
+    //Constructor
+    public Player (String playerName, int strategy){
+        defaultBoats = new int[][]{
+                {11,21,22,32,42,39,49,43,53,63,73,66,76,86},
+                {24,25,39,49,59,66,67,68,69,75,85,95,44,45},
+                {8,9,22,32,42,35,36,37,38,61,62,63,26,27},
+                {0,10,13,14,15,27,37,47,57,32,42,52,64,65},
+                {14,24,36,46,56,32,42,52,62,76,77,78,74,84},
+        };
+
+        myTurn = false;
+        this.playerName = playerName;
+        myBoats = new int[14];
+        for(int i = 0; i < myBoats.length; i++){
+            myBoats[i] = defaultBoats[strategy-1][i];
+        }
+
+        myPlays = new int[100];
+
+        cleanMatrixPlays(myPlays);
+
+    }
+
+    private void cleanMatrixPlays(int[] array){
+        int i;
+        for(i=0;i<100;i++){
+            array[i] = 0;
+        }
+    }
+
+    public boolean getShot(int shot){
+        boolean success = false;
+
+        for(int i = 0; i< myBoats.length;i++){
+
+            if(shot == myBoats[i]){
+                //TODO: send answer
+                success = true;
+                break;
+            }
+        }
+
+        return success;
+    }
+
+    //For PC bot
+    public int shot(){
+        int shot;
+
+        Random rand = new Random();
+        shot = rand.nextInt(99);
+
+        if(myPlays[shot] == 0){
+            myPlays[shot] = 1;
+            return shot;
+        }
+        else return -1;
+    }
+
+    public int[] getMyBoats(){
+        return myBoats;
+    }
+
+    //Maintaned
+    public void deleteShip (Ship ship){
+        for(int i =0; i<5; i++){
+            for (int j = 0 ; j<5; j++){
+                if(board[i] [j] == ship.getIdShip())
+                    board[i] [j] = 0;
+            }
+        }
+
+    }
+
+    /*public class Player implements Serializable {
     private boolean turn;
     private String playerName;
     public Ship[] ships;
@@ -112,5 +198,5 @@ public class Player implements Serializable {
     public String activeUser(String username){
         return username;
 
-    }
+    }*/
 }

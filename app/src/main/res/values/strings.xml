@@ -7,8 +7,12 @@
     <string name="LobbyTxt">Está tudo pronto para mais uma aventura!</string>
     <string name="intrucoes">A batalha naval é um jogo de tabuleiro jogado por dois jogadores. \n\nCada jogador possui o seu
         tabuleiro onde:\n\n(1) No ínicio do jogo escolhe, de entre os cenários possíveis a sua distribuição preferida.\n\n(2)Durante o jogo deve indicar três posições para atacar, recebendo informação
-        acerca do sucesso ou insucesso do ataque.\n\n(3) Ao fim de três tiros é a vez do outro jogador.\n\nBom jogo!</string>
+        acerca do sucesso, quadriculas que tomam a cor vermelha, ou insucesso, quadriculas que tomam a cor azul, do ataque.\n\n(3) Ao fim de três tiros é a vez do outro jogador.\n\nBom jogo!</string>
     <string name="placeShips">Coloque os seus navios, existem várias opções.</string>
+    <string name="yourTurn">É a tua vez de jogar.</string>
+    <string name="othersTurn">É a vez do outro jogador.</string>
+    <string name="pressPlay">Carrega Play para jogares.</string>
+
 
     <!--  DeviceListActivity -->
     <string name="scanning">scanning for devices...</string>

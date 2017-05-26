@@ -1,72 +1,44 @@
 package pt.iscte.batalhanaval;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.wifi.p2p.WifiP2pManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
+import java.util.Random;
 import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
-    private GridLayout glp;
-    private Player player2;
-    private Player player1;
-    private TextView B00p;
-    private TextView B10p;
-    private TextView B20p;
-    private TextView B04p;
-
-    private TextView B00P1;
-    private TextView B10P1;
-    private TextView B20P1;
-    private TextView B30P1;
-    private TextView B40P1;
-    private TextView B50P1;
-    private TextView B60P1;
-    private TextView B70P1;
-    private TextView B80P1;
-    private TextView B90P1;
-
-
-
-
-
-
-
-
-
-
-    private TextView B11P1;
-    private TextView B21P1;
-    private TextView B22P1;
-    private TextView B32P1;
-    private TextView B42P1;
-    private TextView B43P1;
-    private TextView B53P1;
-    private TextView B63P1;
-    private TextView B73P1;
-    private TextView B66P1;
-    private TextView B76P1;
-    private TextView B86P1;
-    private TextView B39P1;
-    private TextView B49P1;
-    private TextView im;
-
-
-    private Ship s1;
+    /*private Ship s1;
     private Ship s2;
     private Ship s3;
     private Ship s4;
-    private Ship s5;
+    private Ship s5;*/
 
-    private int myBoatsDisplay = 99;
+    private Button goBtn;
+    private Button quitBtn;
+    private TextView help;
+
+    private int myBoatsDisplay = 99, plays = 0, successfulShots = 0;
+
+    private Boolean multiplayer, myTurn = true;
+
+    private int[] myPlays, othersPlays;
+    private Player p2, mainPlayer;
+
+    private int numbShots;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +46,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_game);
 
         String intentString = getIntent().getStringExtra("BOATS_DISPLAY");
+        String intentString2 = getIntent().getStringExtra("MULTIPLAYER");
 
         try {
             myBoatsDisplay = Integer.parseInt(intentString);
@@ -83,7 +56,205 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             GameActivity.this.startActivity(registerIntent);
         }
 
-        player2 = new Player("player2");
+        if(intentString2.equals("ON")) multiplayer = true;
+        else multiplayer = false;
+
+        myPlays = new int[100];
+        othersPlays = new int[100];
+
+        for(int i = 0; i < 100; i++){
+            myPlays[i]=0;
+            othersPlays[i]=0;
+        }
+
+        help = (TextView)findViewById(R.id.helpTxt);
+        goBtn = (Button) findViewById(R.id.go);
+        goBtn.setOnClickListener(this);
+
+        quitBtn = (Button) findViewById(R.id.quit);
+        quitBtn.setOnClickListener(this);
+
+        cleanGrid();
+
+        mainPlayer = new Player("MainPlayer", myBoatsDisplay);
+
+        Random rand = new Random();
+
+        if(!multiplayer){
+            p2 = new Player("PC",rand.nextInt(5));
+        }
+        goBtn.setVisibility(View.INVISIBLE);
+
+        int[] boats = mainPlayer.getMyBoats();
+        for(int i = 0; i < boats.length; i++){
+            othersPlays[boats[i]] = 5;
+        }
+    }
+
+    public void onClick(View v) {
+
+        if(v.equals(goBtn)){
+            setupGrid(R.string.yourTurn, myPlays);
+            myTurn = true;
+            goBtn.setVisibility(View.INVISIBLE);
+        } else if(v.equals(quitBtn)){
+
+            quitGame();
+
+        } else {
+            if(!myTurn) return;
+            //Toast.makeText(GameActivity.this,Integer.toString(v.getId()) ,Toast.LENGTH_SHORT).show();
+            int pressedId = v.getId();
+
+            if(myPlays[pressedId] != 0) return;
+
+            boolean result = p2.getShot(pressedId);
+            markShot(myPlays, pressedId, result);
+
+            numbShots++;
+
+            if(numbShots > 2){
+                setupGrid(R.string.othersTurn, othersPlays);
+                myTurn = false;
+                SimulatePC();
+            }
+
+        }
+    }
+
+    private void SimulatePC(){
+
+        for(int i = 0; i < 3; i++){
+            int pcShot = p2.shot();
+            while(pcShot == -1){
+                pcShot = p2.shot();
+            }
+            boolean answer = mainPlayer.getShot(pcShot);
+            markShot(othersPlays,pcShot,answer);
+        }
+        numbShots = 0;
+        goBtn.setVisibility(View.VISIBLE);
+        help.setText(R.string.pressPlay);
+    }
+
+    private void Shot(){
+
+        plays++;
+    }
+
+    public void ReceiveShotFeedback(){
+
+    }
+
+
+    public void markShot(int[] playerGrid,int shot, boolean success){
+
+        //String cellId = "button" + shot;
+        //int resId = getResources().getIdentifier(cellId, "id", getPackageName());
+        TextView aux = (TextView) findViewById(shot);
+
+        if(!success){
+            aux.setBackgroundResource(R.drawable.shape_button_blue);
+            playerGrid[shot] = 2;//2 means miss
+        } else{
+            aux.setBackgroundResource(R.drawable.shape_button_red);
+            playerGrid[shot] = 1; //1 means success
+            successfulShots++;
+            if(successfulShots > 13){
+                String text = "";
+
+                if(myTurn) text = "Parabéns foi o vencedo do jogo!";
+                else text = "O seu adversário ganhou, o jogo terminou.";
+                endGame(text);
+            }
+        }
+    }
+
+    private void setupGrid(int message, int[] grid){
+        successfulShots = 0;
+        help.setText(message);
+        int i;
+        for(i = 0; i<100;i++) {
+            TextView aux = (TextView) findViewById(i);
+
+            switch (grid[i]){
+                case 0:
+                    //No shots on that spot
+                    aux.setBackgroundResource(R.drawable.shape_button);
+                    break;
+                case 1:
+                    //Successful shots
+                    successfulShots++;
+                    aux.setBackgroundResource(R.drawable.shape_button_red);
+                    break;
+                case 2:
+                    //Unsuccessful shots
+                    aux.setBackgroundResource(R.drawable.shape_button_blue);
+                    break;
+                case 5:
+                    //There's a bot there not shot
+                    aux.setBackgroundResource(R.drawable.shape_button_gray);
+                    break;
+            }
+        }
+    }
+
+    private void cleanGrid(){
+        int i;
+        for(i = 0; i<100;i++) {
+            String cellId = "";
+            if(i>9)  cellId = "button" + i;
+            else cellId = "button0"+i;
+
+            int resId = getResources().getIdentifier(cellId, "id", getPackageName());
+            TextView aux = (TextView) findViewById(resId);
+            aux.setBackgroundResource(R.drawable.shape_button);
+            aux.setOnClickListener(this);
+            aux.setId(i);
+        }
+    }
+
+    private void quitGame(){
+        AlertDialog.Builder alertD = new AlertDialog.Builder(GameActivity.this);
+        alertD.setMessage("Tem a certeza que quer desistir do jogo?").setCancelable(false)
+                .setPositiveButton("Sim", new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int which){
+                        Intent registerIntent = new Intent(GameActivity.this, Lobby.class);
+                        GameActivity.this.startActivity(registerIntent);
+                    }
+                })
+                .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog check = alertD.create();
+        check.setTitle("Desistir do jogo");
+        check.show();
+    }
+
+    private void endGame(String message){
+        AlertDialog.Builder alertD = new AlertDialog.Builder(GameActivity.this);
+        alertD.setMessage(message).setCancelable(false)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int which){
+                        Intent registerIntent = new Intent(GameActivity.this, Lobby.class);
+                        GameActivity.this.startActivity(registerIntent);
+                    }
+                });
+        AlertDialog check = alertD.create();
+        check.setTitle("Fim do jogo");
+        check.show();
+    }
+
+    public void onBackPressed() {
+        quitGame();
+    }
+
+    /* ESTAVA NO ONCREATE
+
+    player2 = new Player("player2");
 
         glp = (GridLayout) findViewById(R.id.glPrincipal);
         B00p = (TextView) findViewById(R.id.button00p);
@@ -96,13 +267,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         B20P1 = (TextView) findViewById(R.id.button20p1);
         B30P1 = (TextView) findViewById(R.id.button30p1);
 
-
-
-
         B11P1 = (TextView) findViewById(R.id.button11p1);
-
-
-
 
         putShipsP2();
         // player2.addShipsToGrid(1,0,s1);
@@ -117,10 +282,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         B00p.setOnClickListener(this);
         B10p.setOnClickListener(this);
         B20p.setOnClickListener(this);
-        B04p.setOnClickListener(this);
-    }
+        B04p.setOnClickListener(this);*/
 
-    public void putShipsP2() {
+    /*public void putShipsP2() {
         s1 = new Ship(2, 0, 1, R.drawable.ship1r, R.id.ship1r);
         s2 = new Ship(3, 0, 2, R.drawable.ship2r, R.id.ship2r);
         s3 = new Ship(4, 0, 3, R.drawable.ship3r, R.id.ship3r);
@@ -227,14 +391,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
-    }
+    }*/
 
-
-
-
-
-
-    }
+}
 
 
 
