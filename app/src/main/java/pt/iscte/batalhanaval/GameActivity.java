@@ -49,6 +49,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private List<Integer> mBuffer = new ArrayList<>();
     private List<String> mResponseBuffer = new ArrayList<>();
     private ArrayAdapter<String> mResponsesAdapter;
+    private static String position;
 
 
     private int myBoatsDisplay = 99, plays = 0, successfulShots = 0, successfulShots2 = 0;
@@ -103,6 +104,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         String intentString = getIntent().getStringExtra("BOATS_DISPLAY");
         String intentString2 = getIntent().getStringExtra("MULTIPLAYER");
         mSmoothBluetooth = new SmoothBluetooth(this);
+
 
 
         try {
@@ -206,6 +208,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             mSmoothBluetooth.tryConnection();
         } else if (v.equals(findBtn)) {
             mSmoothBluetooth.doDiscovery();
+
         } else {
 
             if (!myTurn) return;
@@ -541,6 +544,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == ENABLE_BT__REQUEST) {
             if (resultCode == RESULT_OK) {
                 mSmoothBluetooth.tryConnection();
+            }
+        }
+
+        if (requestCode == ENABLE_BT__REQUEST2) {
+            if (resultCode == RESULT_OK) {
+                position = data.getExtras().getString(ListDevices.deviceMac);
+                SmoothBluetooth.ConnectionCallback connectionCallback = null;
+               BluetoothAdapter myDevice =  mSmoothBluetooth.getBluetoothAdapter();
+
+                connectionCallback.connectTo(new Device("Player2",position,true));
+
             }
         }
     }
