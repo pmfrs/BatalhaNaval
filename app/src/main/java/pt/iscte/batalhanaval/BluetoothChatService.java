@@ -138,12 +138,14 @@ public class BluetoothChatService {
             mConnectedThread.cancel();
             mConnectedThread = null;
         }
-
+        Log.d("ConnectDevid","Antes do update to user interface");
         // Start the thread to connect with the given device
         mConnectThread = new ConnectThread(device, secure);
         mConnectThread.start();
         // Update UI title
+        Log.d("ConnectDevid","Antes do update to user interface");
         updateUserInterfaceTitle();
+        Log.d("ConnectDevid","Depois do update to user interface");
     }
 
     /**
