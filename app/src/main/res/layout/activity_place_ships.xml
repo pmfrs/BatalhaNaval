@@ -969,6 +969,20 @@
 
                 />
 
+            <Button
+                android:id="@+id/place_ships"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="putShips"
+                android:text="Colocar" />
+
+            <Button
+                android:id="@+id/ready"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pronto!"
+                android:visibility="invisible"
+                />
 
             <ImageView
                 android:id="@+id/ship4r"
@@ -988,20 +1002,7 @@
 
                 />
 
-            <Button
-                android:id="@+id/place_ships"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="putShips"
-                android:text="Colocar" />
 
-            <Button
-                android:id="@+id/ready"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pronto!"
-                android:visibility="invisible"
-                />
 
         </LinearLayout>
 
