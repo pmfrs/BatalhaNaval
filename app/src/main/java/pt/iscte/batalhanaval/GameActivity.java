@@ -32,7 +32,10 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.TimerTask;
+
+
 
 import io.palaima.smoothbluetooth.Device;
 import io.palaima.smoothbluetooth.SmoothBluetooth;
@@ -50,7 +53,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private List<String> mResponseBuffer = new ArrayList<>();
     private ArrayAdapter<String> mResponsesAdapter;
     private static String position;
-
+    private BluetoothAdapter meuBluetoothadapter;
+    static String deviceMac;
 
     private int myBoatsDisplay = 99, plays = 0, successfulShots = 0, successfulShots2 = 0;
 
@@ -551,8 +555,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             if (resultCode == RESULT_OK) {
                 position = data.getExtras().getString(ListDevices.deviceMac);
                 SmoothBluetooth.ConnectionCallback connectionCallback = null;
-               BluetoothAdapter myDevice =  mSmoothBluetooth.getBluetoothAdapter();
-
                 connectionCallback.connectTo(new Device("Player2",position,true));
 
             }
@@ -626,6 +628,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onDevicesFound(final List<Device> deviceList,
                                    final SmoothBluetooth.ConnectionCallback connectionCallback) {
+            ArrayAdapter<String> ArrayBluetooth;
 
          /*   final MaterialDialog dialog = new MaterialDialog.Builder(GameActivity.this)
                     .title("Devices")
@@ -645,10 +648,50 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             dialog.show();*/
-            Intent abreLista = new Intent(GameActivity.this, ListDevices.class);
+            //Intent abreLista = new Intent(GameActivity.this, ListDevices.class);
             // startActivityResult(abreLista, ENABLE_BT__REQUEST2);
-            startActivityForResult(abreLista, ENABLE_BT__REQUEST2);
+            //startActivityForResult(abreLista, ENABLE_BT__REQUEST2);
 
+            AlertDialog.Builder builderSingle = new AlertDialog.Builder(GameActivity.this);
+            //builderSingle.setIcon(R.drawable.ic_launcher);
+            builderSingle.setTitle("Choose one Paired Connection:-");
+
+            final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(GameActivity.this, android.R.layout.select_dialog_singlechoice);
+            ArrayBluetooth = new ArrayAdapter<String>(GameActivity.this, android.R.layout.select_dialog_singlechoice);
+            meuBluetoothadapter = BluetoothAdapter.getDefaultAdapter();
+            Set<BluetoothDevice> devicesP = meuBluetoothadapter.getBondedDevices();
+Log.d("Inside Listener"," size " +devicesP.size());
+            if(devicesP.size()> 0){
+                for(BluetoothDevice device : devicesP){
+                    String nomeBT = device.getName();
+                    String macAdd = device.getAddress();
+                    ArrayBluetooth.add(nomeBT + "\n" + macAdd);
+                }
+            }
+
+            builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    String strName = arrayAdapter.getItem(which);
+                    Log.d("Inside Listener"," size " +strName);
+                    String mac = strName.substring(strName.length() - 17);
+                    Log.d("Inside Listener"," size " +mac);
+
+                    connectionCallback.connectTo(new Device("Player2",mac,true));
+                    dialog.dismiss();
+
+                    //builderInner.show();
+                }
+            });
+            builderSingle.show();
         }
 
         private void startActivityOnResult(Intent abreLista, int enableBt_request2) {
