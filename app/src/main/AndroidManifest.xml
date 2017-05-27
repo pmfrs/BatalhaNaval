@@ -39,7 +39,8 @@
         <activity android:name=".Lobby" />
         <activity android:name=".InstructionsActivity" />
         <!--<activity android:name=".BluetoothChatFragment" />-->
-        <activity android:name=".DeviceListActivity"
+        <activity android:name=".ListDevices"
+            android:theme="@android:style/Theme.Dialog"
             android:label="Select a device to connect">
         </activity>
     </application>

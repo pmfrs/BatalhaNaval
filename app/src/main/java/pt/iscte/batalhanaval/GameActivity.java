@@ -45,6 +45,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Button connectBtn;
     private TextView help, debug;
     public static final int ENABLE_BT__REQUEST = 1;
+    public static final int ENABLE_BT__REQUEST2 = 2;
     private List<Integer> mBuffer = new ArrayList<>();
     private List<String> mResponseBuffer = new ArrayList<>();
     private ArrayAdapter<String> mResponsesAdapter;
@@ -631,8 +632,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             dialog.show();*/
             Intent abreLista = new Intent(GameActivity.this, ListDevices.class);
-            startActivity(abreLista);
+            // startActivityResult(abreLista, ENABLE_BT__REQUEST2);
+            startActivityForResult(abreLista, ENABLE_BT__REQUEST2);
 
+        }
+
+        private void startActivityOnResult(Intent abreLista, int enableBt_request2) {
         }
 
         @Override
