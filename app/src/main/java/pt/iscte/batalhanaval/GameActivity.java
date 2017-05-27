@@ -58,7 +58,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private int[] myPlays, othersPlays;
     private Player p2, mainPlayer;
 
-    private int numbShots;
+    private int numbShots, initialRandom;
+
     /*****************************
      * New Bluetooth
      *****************************/
@@ -103,7 +104,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         String intentString = getIntent().getStringExtra("BOATS_DISPLAY");
         String intentString2 = getIntent().getStringExtra("MULTIPLAYER");
         mSmoothBluetooth = new SmoothBluetooth(this);
-
+        mSmoothBluetooth.setListener(mListener);
 
         try {
             myBoatsDisplay = Integer.parseInt(intentString);
@@ -205,7 +206,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             //return true;
             mSmoothBluetooth.tryConnection();
         } else if (v.equals(findBtn)) {
+
             mSmoothBluetooth.doDiscovery();
+
+
+
         } else {
 
             if (!myTurn) return;
@@ -215,18 +220,77 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             if (myPlays[pressedId] != 0) return;
 
-            boolean result = p2.getShot(pressedId);
-            markShot(1, pressedId, result);
-
             numbShots++;
 
-            if (numbShots > 2) {
-                setupGrid(R.string.othersTurn, othersPlays);
-                myTurn = false;
-                SimulatePC();
+            if(!multiplayer){
+                boolean result = p2.getShot(pressedId);
+                markShot(1, pressedId, result);
+
+                if (numbShots > 2) {
+                    setupGrid(R.string.othersTurn, othersPlays);
+                    myTurn = false;
+                    SimulatePC();
+                }
+                return;
             }
 
+            myTurn = false;
+            help.setText("Aguardando feedback tiro.");
+            sendMesasge(BTMessages.sendShot(pressedId));
         }
+    }
+
+    private void messageReceived(String message){
+        int[] code = BTMessages.decodMessage(message);
+        boolean answer = false;
+        switch (code[0]){
+            //Receção de tiro
+            case 1:
+                int hisShot = code[1];
+
+                answer = mainPlayer.getShot(hisShot);
+                sendMesasge(BTMessages.sendShotFeedback(code[1],answer));
+
+                markShot(1,code[1],answer);
+                break;
+            //Receção feedback tiro
+            case 2:
+
+                if(code[2] == 1) answer = true;
+                markShot(2, code[1], answer);
+
+                if(numbShots > 2){
+                    setupGrid(R.string.othersTurn, othersPlays);
+                    help.setText("É a vez do teu adversário!");
+                    sendMesasge(BTMessages.yourTurn());
+                    return;
+                }
+                help.setText("Podes dar um tiro!");
+                myTurn = true;
+                break;
+            //Envio de Random
+            case 3:
+
+                if(code[3] > BTMessages.getMyRand()) {
+                    setupGrid(R.string.othersTurn, othersPlays);
+                    help.setText("É a vez do teu adversário!");
+                    sendMesasge(BTMessages.yourTurn());
+                }
+                else if(code[3]==BTMessages.getMyRand()) sendMesasge(BTMessages.sendFirstContact());
+
+                break;
+            //Dá a vez de jogar
+            case 4:
+                numbShots = 0;
+                setupGrid(R.string.yourTurn, myPlays);
+                myTurn = true;
+                help.setText("Podes dar um tiro!");
+                break;
+        }
+    }
+
+    private void sendMesasge(String message){
+
     }
 
     private void SimulatePC() {

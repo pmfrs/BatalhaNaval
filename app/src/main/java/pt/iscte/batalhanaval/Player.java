@@ -57,7 +57,6 @@ public class Player implements Serializable {
         for(int i = 0; i< myBoats.length;i++){
 
             if(shot == myBoats[i]){
-                //TODO: send answer
                 success = true;
                 break;
             }
