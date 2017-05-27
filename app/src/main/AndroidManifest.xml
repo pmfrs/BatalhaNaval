@@ -38,8 +38,10 @@
 
         <activity android:name=".Lobby" />
         <activity android:name=".InstructionsActivity" />
-        <activity android:name=".BluetoothChatFragment" />
-        <activity android:name=".DeviceListActivity"></activity>
+        <!--<activity android:name=".BluetoothChatFragment" />-->
+        <activity android:name=".DeviceListActivity"
+            android:label="Select a device to connect">
+        </activity>
     </application>
 
 </manifest>

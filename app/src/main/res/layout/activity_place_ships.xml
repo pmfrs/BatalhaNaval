@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
     tools:context="pt.iscte.batalhanaval.PlaceShipsActivity"
     android:gravity="center_horizontal"
@@ -18,7 +18,8 @@
         android:layout_height="38dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="@string/placeShips" />
+        android:text="@string/placeShips"
+        android:textSize="16sp" />
     <GridLayout
         android:id="@+id/glTop"
         android:layout_width="wrap_content"
@@ -986,13 +987,13 @@
                 android:visibility="invisible"
 
                 />
+
             <Button
                 android:id="@+id/place_ships"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Colocar navios"
                 android:onClick="putShips"
-                />
+                android:text="Colocar" />
 
             <Button
                 android:id="@+id/ready"

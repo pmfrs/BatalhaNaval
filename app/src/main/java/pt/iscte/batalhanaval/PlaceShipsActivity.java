@@ -449,19 +449,19 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
     }
 
 
-private void resetShips(TextView[][] buttons) {
-    Log.d("s", "Entrei no reset");
+    private void resetShips(TextView[][] buttons) {
+        Log.d("s", "Entrei no reset");
 
-    for(int i = 0; i<10 ; i++){
-        for(int j = 0 ; j<10; j++){
-            Log.d("Reset", "i " + i);
+        for(int i = 0; i<10 ; i++){
+            for(int j = 0 ; j<10; j++){
+                Log.d("Reset", "i " + i);
 
-            Log.d("Reset", "j " + j);
-          buttons[i][j].setBackground(shapeButton);
+                Log.d("Reset", "j " + j);
+              buttons[i][j].setBackground(shapeButton);
+            }
         }
-    }
 
-}
+    }
 
 
     public void putShips(){
