@@ -19,6 +19,7 @@ public class BTMessages {
     //Evento 4 - Dá a vez de jogar ao outro jogador
 
     private static String TAG = "BTMessages";
+    private static int myRand;
 
     public static String sendShot(int coordenada){
         String message="";
@@ -60,9 +61,15 @@ public class BTMessages {
         String message = "";
 
         Random rand = new Random();
-        message = "" + 3 + "00" + rand.nextInt(100);
+        myRand = rand.nextInt(100);
+
+        message = "" + 3 + "00" + myRand;
 
         return message;
+    }
+
+    public static int getMyRand(){
+        return  myRand;
     }
 
     public static String yourTurn(){
