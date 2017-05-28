@@ -12,6 +12,7 @@
     <string name="yourTurn">É a tua vez de jogar.</string>
     <string name="othersTurn">É a vez do outro jogador.</string>
     <string name="pressPlay">Carrega Play para jogares.</string>
+    <string name="regRules">Deverá introduzir um e-mail válido.\nA password escolhida deverá ser constituida no mínimo por 6 carateres.</string>
 
 
     <!--  DeviceListActivity -->

@@ -42,6 +42,7 @@ import io.palaima.smoothbluetooth.SmoothBluetooth;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private String TAG = "GameActivity";
     private Button goBtn;
     private Button quitBtn;
     private Button findBtn;
@@ -63,7 +64,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private int[] myPlays, othersPlays;
     private Player p2, mainPlayer;
 
-    private int numbShots;
+    private int numbShots, dificulty;
+
     /*****************************
      * New Bluetooth
      *****************************/
@@ -73,7 +75,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     /*****************************
      * FROM BLUETOOTHCHATFRAGMENT, TRYING TO MERGE BOTH
      *****************************/
-    private static final String TAG = "BluetoothChatFragment";
+    //private static final String TAG = "BluetoothChatFragment";
 
     //Intent request codes
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
@@ -107,9 +109,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         String intentString = getIntent().getStringExtra("BOATS_DISPLAY");
         String intentString2 = getIntent().getStringExtra("MULTIPLAYER");
-        mSmoothBluetooth = new SmoothBluetooth(this);
 
-
+        /*mSmoothBluetooth = new SmoothBluetooth(this);
+        mSmoothBluetooth.setListener(mListener);*/
 
         try {
             myBoatsDisplay = Integer.parseInt(intentString);
@@ -147,22 +149,25 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         cleanGrid();
 
-        mainPlayer = new Player("MainPlayer", myBoatsDisplay);
+        mainPlayer = new Player(myBoatsDisplay,debug, -1);
 
         Random rand = new Random();
 
         if (!multiplayer) {
-
-            p2 = new Player("PC", rand.nextInt(5));
+            String x = getIntent().getStringExtra("DIFICULTY");
+            int n = Integer.parseInt(x);
+            dificulty = n;
+            debug.setText(""+dificulty);
+            p2 = new Player((rand.nextInt(5)+1),debug, myBoatsDisplay);
             goBtn.setVisibility(View.INVISIBLE);
-            connectBtn.setVisibility(View.INVISIBLE);
             myTurn = true;
 
         } else {
             /***************************
              * MULTIPLAYER STUFF
              */
-/*
+            connectBtn.setVisibility(View.VISIBLE);
+            findBtn.setVisibility(View.VISIBLE);
             //Get local Bluetooth adapter
             mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -174,7 +179,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 this.finish();
             }
 
-          //  ensureDiscoverable();
+            ensureDiscoverable();
             /*************
              * FINISH MULTI
              *************/
@@ -182,7 +187,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
-        debug.setText("Potuação: \nTu: " + successfulShots + "/14\nAdversário: " + successfulShots2 + "/14");
+        //debug.setText("Pontuação: \nTu: " + successfulShots + "/14\nAdversário: " + successfulShots2 + "/14");
 
         int[] boats = mainPlayer.getMyBoats();
         for (int i = 0; i < boats.length; i++) {
@@ -211,54 +216,105 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             //return true;
             mSmoothBluetooth.tryConnection();
         } else if (v.equals(findBtn)) {
-            mSmoothBluetooth.doDiscovery();
+            mSmoothBluetooth.tryConnection();
 
         } else {
 
             if (!myTurn) return;
-
+            Log.d(TAG, "Playing.");
             //Toast.makeText(GameActivity.this,Integer.toString(v.getId()) ,Toast.LENGTH_SHORT).show();
             int pressedId = v.getId();
 
             if (myPlays[pressedId] != 0) return;
 
-            boolean result = p2.getShot(pressedId);
-            markShot(1, pressedId, result);
-
             numbShots++;
 
-            if (numbShots > 2) {
-                setupGrid(R.string.othersTurn, othersPlays);
-                myTurn = false;
-                SimulatePC();
+            if(!multiplayer){
+                boolean result = p2.getShot(pressedId);
+                markShot(1, pressedId, result);
+
+                if (numbShots > 0) {
+                    setupGrid(R.string.othersTurn, othersPlays);
+                    myTurn = false;
+                    SimulatePC();
+                }
+                return;
             }
+
+            myTurn = false;
+            help.setText("Aguardando feedback tiro.");
+            sendMesasge(BTMessages.sendShot(pressedId));
 
         }
     }
+    private void messageReceived(String message){
+        int[] code = BTMessages.decodMessage(message);
+        boolean answer = false;
+        switch (code[0]){
+            //Receção de tiro
+            case 1:
+                int hisShot = code[1];
 
+                answer = mainPlayer.getShot(hisShot);
+                sendMesasge(BTMessages.sendShotFeedback(code[1],answer));
+
+                markShot(1,code[1],answer);
+                break;
+            //Receção feedback tiro
+            case 2:
+
+                if(code[2] == 1) answer = true;
+                markShot(2, code[1], answer);
+
+                if(numbShots > 2){
+                    setupGrid(R.string.othersTurn, othersPlays);
+                    help.setText("É a vez do teu adversário!");
+                    sendMesasge(BTMessages.yourTurn());
+                    return;
+                }
+                help.setText("Podes dar um tiro!");
+                myTurn = true;
+                break;
+            //Envio de Random
+            case 3:
+
+                if(code[3] > BTMessages.getMyRand()) {
+                    setupGrid(R.string.othersTurn, othersPlays);
+                    help.setText("É a vez do teu adversário!");
+                    sendMesasge(BTMessages.yourTurn());
+                }
+                else if(code[3]==BTMessages.getMyRand()) sendMesasge(BTMessages.sendFirstContact());
+
+                break;
+            //Dá a vez de jogar
+            case 4:
+                numbShots = 0;
+                setupGrid(R.string.yourTurn, myPlays);
+                myTurn = true;
+                help.setText("Podes dar um tiro!");
+                break;
+        }
+    }
+
+    private void sendMesasge(String message){
+
+    }
     private void SimulatePC() {
-
-        for (int i = 0; i < 3; i++) {
-            int pcShot = p2.shot();
+        Log.d(TAG,"Simulating PC");
+        for (int i = 0; i < 1; i++) {
+            int pcShot = -1;
             while (pcShot == -1) {
-                pcShot = p2.shot();
+                pcShot = p2.shot(dificulty);
             }
             boolean answer = mainPlayer.getShot(pcShot);
             markShot(2, pcShot, answer);
+            //p2.receiveFeedback(pcShot,answer);
         }
         numbShots = 0;
         goBtn.setVisibility(View.VISIBLE);
         help.setText(R.string.pressPlay);
     }
 
-    private void Shot() {
-
-        plays++;
-    }
-
-    public void ReceiveShotFeedback() {
-
-    }
 
 
     public void markShot(int matrix, int shot, boolean success) {
@@ -282,13 +338,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             debug.setText("Potuação: \n\nTu: " + successfulShots + "/14\nAdversário: " + successfulShots2 + "/14");
 
-            if (successfulShots > 13) {
-                String text = "";
+            if (successfulShots > 13)  endGame("Parabéns foi o vencedor do jogo!");
+            else if(successfulShots2 > 13) endGame("O seu adversário ganhou, o jogo terminou.");
 
-                if (myTurn) text = "Parabéns foi o vencedor do jogo!";
-                else text = "O seu adversário ganhou, o jogo terminou.";
-                endGame(text);
-            }
         }
     }
 
@@ -331,6 +383,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             aux.setBackgroundResource(R.drawable.shape_button);
             aux.setOnClickListener(this);
             aux.setId(i);
+            aux.setText(""+aux.getId());
         }
     }
 
@@ -379,53 +432,51 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      *
      **********************************************************************************************/
 
-//    public void onStart(){
-//        super.onStart();
-//        if(!multiplayer) return;
+    public void onStart(){
+        super.onStart();
+        if(!multiplayer) return;
 
     /*******
      * MULTIPLAYER
      */
     //If bleutooth is not on, request it
     //setupChat() will then be called during onActivityResult
-//        if(!mBluetoothAdapter.isEnabled()){
-//            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-//        } else if(mChatService == null){
-//            setupChat();
-//        }
-//    }
+        if(!mBluetoothAdapter.isEnabled()){
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+        } else if(mChatService == null){
+            setupChat();
+        }
+    }
 
-//    public void onDestroy(){
-//        super.onDestroy();
-//        if(!multiplayer) return;
-
-    /*******
-     * MULTIPLAYER
-     */
-//        if(mChatService != null){
-//            mChatService.stop();
-    //       }
-    //   }
-
-    //   public void onResume(){
-    //       super.onResume();
-    //       if(!multiplayer) return;
+    public void onDestroy(){
+        super.onDestroy();
+        if(!multiplayer) return;
 
     /*******
      * MULTIPLAYER
      */
+        if(mChatService != null){
+            mChatService.stop();
+           }
+       }
+
+       public void onResume(){
+           super.onResume();
+           if(!multiplayer) return;
+
+
     // Performing this check in onResume() covers the case in which BT was
     // not enabled during onStart(), so we were paused to enable it...
     // onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
 //        if(mChatService != null){
     //Only if the state is STATE_NONE, do we know that we haven't started already
-//            if(mChatService.getState() == BluetoothChatService.STATE_NONE){
+           if(mChatService.getState() == BluetoothChatService.STATE_NONE){
     //Start BT chat services
-/*                mChatService.start();
+               mChatService.start();
             }
         }
-    }
+
 
     private void setupChat(){
         //Initialize the BluetoothChatService to perform bluetooth connections
@@ -442,7 +493,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(discoverableIntent);
         }
     }
-/*
+
     //Send a message
     private void sendMessage(String message){
         //Check that we're actually connected before trying anything
@@ -454,8 +505,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         //Gets the message bytes and tells the BluetoothChat Service to write
         byte[] send = message.getBytes();
         mChatService.write(send);
-    }*/
-/*
+    }
+
     //The Handler that get information back from the BluetootchChatService
     private final Handler mHandler = new Handler() {
         @Override
@@ -506,8 +557,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     break;
             }
         }
-    };*/
-/*
+    };
+
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         switch (requestCode){
             case REQUEST_CONNECT_DEVICE_SECURE:
@@ -532,8 +583,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
         }
-    }*/
-/*
+    }
+
     //Establish a connection to other device
     private void connectDevice(Intent data, boolean secure) {
         //Get the device MAC adress
@@ -542,8 +593,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
         //Attempt to connect to the device
         mChatService.connect(device,secure);
-    }*/
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    }
+
+    /*protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ENABLE_BT__REQUEST) {
             if (resultCode == RESULT_OK) {
@@ -559,7 +611,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         }
-    }
+    }*/
 
     private SmoothBluetooth.Listener mListener = new SmoothBluetooth.Listener() {
         @Override
@@ -651,7 +703,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             //Intent abreLista = new Intent(GameActivity.this, ListDevices.class);
             // startActivityResult(abreLista, ENABLE_BT__REQUEST2);
             //startActivityForResult(abreLista, ENABLE_BT__REQUEST2);
-
+            Log.d("----------------------",";;;;;;;;;;;;;;;;;;;");
             AlertDialog.Builder builderSingle = new AlertDialog.Builder(GameActivity.this);
             //builderSingle.setIcon(R.drawable.ic_launcher);
             builderSingle.setTitle("Choose one Paired Connection:-");
@@ -660,7 +712,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             ArrayBluetooth = new ArrayAdapter<String>(GameActivity.this, android.R.layout.select_dialog_singlechoice);
             meuBluetoothadapter = BluetoothAdapter.getDefaultAdapter();
             Set<BluetoothDevice> devicesP = meuBluetoothadapter.getBondedDevices();
-Log.d("Inside Listener"," size " +devicesP.size());
+        Log.d("Inside Listener"," size " +devicesP.size());
             if(devicesP.size()> 0){
                 for(BluetoothDevice device : devicesP){
                     String nomeBT = device.getName();

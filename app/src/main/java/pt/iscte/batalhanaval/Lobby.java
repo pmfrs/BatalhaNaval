@@ -72,22 +72,61 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener{
         }
     }
     private void singleGame(){
-        Intent registerIntent = new Intent(Lobby.this, PlaceShipsActivity.class);
-        registerIntent.putExtra("MULTIPLAYER",multiplayer);
-        Lobby.this.startActivity(registerIntent);
+        final CharSequence options[] = new CharSequence[] {"Fácil", "Intermédio", "Difícil"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Escolha a dificuldade:");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                int dif = 0;
+
+                if(options[which].equals("Fácil")){
+                    dif = 0;
+                } else if(options[which].equals("Intermédio")){
+                    dif = 50;
+                } else if(options[which].equals("Difícil")){
+                    dif = 75;
+                }
+
+                Intent registerIntent = new Intent(Lobby.this, PlaceShipsActivity.class);
+                registerIntent.putExtra("MULTIPLAYER",multiplayer);
+                registerIntent.putExtra("DIFICULTY",Integer.toString(dif));
+                Lobby.this.startActivity(registerIntent);
+            }
+        });
+        builder.show();
+
+
     }
-    private void multiGame(){
-        multiplayer = "ON";
-        Intent registerIntent = new Intent(Lobby.this, PlaceShipsActivity.class);
-        registerIntent.putExtra("MULTIPLAYER",multiplayer);
-        Lobby.this.startActivity(registerIntent);
-    }
+
     private void instructions(){
         Intent registerIntent = new Intent(Lobby.this, InstructionsActivity.class);
         Lobby.this.startActivity(registerIntent);
 
     }
 
+    private void multiGame() {
+        AlertDialog.Builder alertD = new AlertDialog.Builder(Lobby.this);
+        alertD.setMessage("O multiplayer não se encontra operacional. Deseja continuar?").setCancelable(false)
+                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        multiplayer = "ON";
+                        Intent registerIntent = new Intent(Lobby.this, PlaceShipsActivity.class);
+                        registerIntent.putExtra("MULTIPLAYER",multiplayer);
+                        Lobby.this.startActivity(registerIntent);
+                    }
+                })
+                .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog check = alertD.create();
+        check.setTitle("Aviso");
+        check.show();
+    }
 
     private void logOut(){
         AlertDialog.Builder alertD = new AlertDialog.Builder(Lobby.this);

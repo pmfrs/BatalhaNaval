@@ -148,6 +148,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
     private Button placeShips;
     private Button ready;
     private String multiplayer;
+    private String dif;
 
     private int boatsDisplay = 99;
     // private Button t;
@@ -160,6 +161,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
         super.onCreate(savedInstanceState);
 
         multiplayer = getIntent().getStringExtra("MULTIPLAYER");
+        dif = getIntent().getStringExtra("DIFICULTY");
 
         setContentView(R.layout.activity_place_ships);
         ship3r = (ImageView) findViewById(R.id.ship3r);
@@ -289,6 +291,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements View.OnTouc
                 String s = Integer.toString(boatsDisplay);
                 i.putExtra("BOATS_DISPLAY",s);
                 i.putExtra("MULTIPLAYER",multiplayer);
+                i.putExtra("DIFICULTY", dif);
                 startActivity(i);
             }
         });

@@ -6,6 +6,8 @@ package pt.iscte.batalhanaval;
 
 public interface Constants {
 
+    public static int dificulty = 0;
+
     // Message types sent from the BluetoothChatService Handler
     public static final int MESSAGE_STATE_CHANGE = 1;
     public static final int MESSAGE_READ = 2;
