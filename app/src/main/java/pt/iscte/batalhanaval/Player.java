@@ -23,23 +23,20 @@ public class Player implements Serializable {
 
 
     private int hit = 0;
-    private TextView debug;
 
     public Ship[] ships;
     private int [][] board;
 
 
     //Constructor
-    public Player (int strategy, TextView debugS, int otherStrat){
+    public Player (int strategy, int otherStrat){
         defaultBoats = new int[][]{
-                {11,21,22,32,42,43,53,63,73,66,76,86,39,49},
+                {11, 21,22,32,42,43,53,63,73,66,76,86,39,49},
                 {24,25,39,49,59,66,67,68,69,75,85,95,44,45},
                 {8,9,22,32,42,35,36,37,38,61,62,63,26,27},
                 {0,10,13,14,15,27,37,47,57,32,42,52,64,65},
                 {14,24,36,46,56,32,42,52,62,76,77,78,74,84},
         };
-
-        debug = debugS;
 
         myBoats = defaultBoats[strategy-1];
         //for(int i = 0; i < myBoats.length; i++){
@@ -47,7 +44,7 @@ public class Player implements Serializable {
         //}
 
         if(otherStrat != -1){
-            othersBoats = defaultBoats[strategy-1];
+            othersBoats = defaultBoats[otherStrat-1];
         }
 
         myPlays = new int[100];
@@ -83,14 +80,18 @@ public class Player implements Serializable {
         Random rand = new Random();
 
         odd = rand.nextInt(100);
+
         if(odd < level && hit < othersBoats.length){
             shot = othersBoats[hit];
             hit++;
-            debug.setText("HIT!"+othersBoats[hit]);
-        } else {
-            shot = rand.nextInt(99);
-            debug.setText("N HIT!");
+            if(myPlays[shot] == 0)
+            {
+                myPlays[shot] = 1;
+                return shot;
+            }
         }
+
+        shot = rand.nextInt(99);
 
         if(myPlays[shot] == 0){
             myPlays[shot] = 1;
@@ -99,8 +100,6 @@ public class Player implements Serializable {
 
         return -1;
     }
-
-
 
 
     public int[] getMyBoats(){

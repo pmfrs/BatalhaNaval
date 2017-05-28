@@ -84,9 +84,9 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener{
                 if(options[which].equals("Fácil")){
                     dif = 0;
                 } else if(options[which].equals("Intermédio")){
-                    dif = 50;
+                    dif = 20;
                 } else if(options[which].equals("Difícil")){
-                    dif = 75;
+                    dif = 40;
                 }
 
                 Intent registerIntent = new Intent(Lobby.this, PlaceShipsActivity.class);

@@ -42,7 +42,7 @@ import io.palaima.smoothbluetooth.SmoothBluetooth;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private String TAG = "GameActivity";
+    //private String TAG = "GameActivity";
     private Button goBtn;
     private Button quitBtn;
     private Button findBtn;
@@ -75,7 +75,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     /*****************************
      * FROM BLUETOOTHCHATFRAGMENT, TRYING TO MERGE BOTH
      *****************************/
-    //private static final String TAG = "BluetoothChatFragment";
 
     //Intent request codes
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
@@ -109,9 +108,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         String intentString = getIntent().getStringExtra("BOATS_DISPLAY");
         String intentString2 = getIntent().getStringExtra("MULTIPLAYER");
-
-        /*mSmoothBluetooth = new SmoothBluetooth(this);
-        mSmoothBluetooth.setListener(mListener);*/
 
         try {
             myBoatsDisplay = Integer.parseInt(intentString);
@@ -149,25 +145,31 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         cleanGrid();
 
-        mainPlayer = new Player(myBoatsDisplay,debug, -1);
+        mainPlayer = new Player(myBoatsDisplay, -1);
 
         Random rand = new Random();
 
         if (!multiplayer) {
+
             String x = getIntent().getStringExtra("DIFICULTY");
             int n = Integer.parseInt(x);
             dificulty = n;
-            debug.setText(""+dificulty);
-            p2 = new Player((rand.nextInt(5)+1),debug, myBoatsDisplay);
+            int botDisplay = rand.nextInt(5)+1;
+            p2 = new Player(botDisplay, myBoatsDisplay);
+
+            help.setText("My: " + myBoatsDisplay + " His: "+botDisplay);
+
             goBtn.setVisibility(View.INVISIBLE);
             myTurn = true;
 
         } else {
-            /***************************
-             * MULTIPLAYER STUFF
-             */
+
+            /*******************************
+             *      MULTIPLAYER STUFF
+             ******************************/
             connectBtn.setVisibility(View.VISIBLE);
             findBtn.setVisibility(View.VISIBLE);
+
             //Get local Bluetooth adapter
             mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -180,15 +182,19 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             ensureDiscoverable();
-            /*************
-             * FINISH MULTI
-             *************/
 
+            //This here is another approach
+            //mSmoothBluetooth = new SmoothBluetooth(this);
+            //mSmoothBluetooth.setListener(mListener);
 
+            /**************************
+             *     FINISH MULTI
+             *************************/
         }
 
-        //debug.setText("Pontuação: \nTu: " + successfulShots + "/14\nAdversário: " + successfulShots2 + "/14");
+        debug.setText("Pontuação: \nTu: " + successfulShots + "/14\nAdversário: " + successfulShots2 + "/14");
 
+        //Loading the boats to paint as gray on player's grid
         int[] boats = mainPlayer.getMyBoats();
         for (int i = 0; i < boats.length; i++) {
             othersPlays[boats[i]] = 5;
@@ -210,19 +216,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         } else if (v.equals(connectBtn)) {
 
-            // Launch the DeviceListActivity to see devices and do scan
-            //Intent serverIntent = new Intent(GameActivity.this, DeviceListActivity.class);
-            //startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_INSECURE);
-            //return true;
-            mSmoothBluetooth.tryConnection();
+            /*Launch the DeviceListActivity to see devices and do scan
+            Intent serverIntent = new Intent(GameActivity.this, DeviceListActivity.class);
+            startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_INSECURE);
+            return true;
+            mSmoothBluetooth.tryConnection();*/
+
         } else if (v.equals(findBtn)) {
-            mSmoothBluetooth.tryConnection();
+
+            //mSmoothBluetooth.tryConnection();
+
 
         } else {
 
             if (!myTurn) return;
-            Log.d(TAG, "Playing.");
-            //Toast.makeText(GameActivity.this,Integer.toString(v.getId()) ,Toast.LENGTH_SHORT).show();
+
             int pressedId = v.getId();
 
             if (myPlays[pressedId] != 0) return;
@@ -233,7 +241,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 boolean result = p2.getShot(pressedId);
                 markShot(1, pressedId, result);
 
-                if (numbShots > 0) {
+                if (numbShots > 2) {
                     setupGrid(R.string.othersTurn, othersPlays);
                     myTurn = false;
                     SimulatePC();
@@ -243,65 +251,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             myTurn = false;
             help.setText("Aguardando feedback tiro.");
-            sendMesasge(BTMessages.sendShot(pressedId));
+            sendMessage(BTMessages.sendShot(pressedId));
 
         }
     }
-    private void messageReceived(String message){
-        int[] code = BTMessages.decodMessage(message);
-        boolean answer = false;
-        switch (code[0]){
-            //Receção de tiro
-            case 1:
-                int hisShot = code[1];
 
-                answer = mainPlayer.getShot(hisShot);
-                sendMesasge(BTMessages.sendShotFeedback(code[1],answer));
-
-                markShot(1,code[1],answer);
-                break;
-            //Receção feedback tiro
-            case 2:
-
-                if(code[2] == 1) answer = true;
-                markShot(2, code[1], answer);
-
-                if(numbShots > 2){
-                    setupGrid(R.string.othersTurn, othersPlays);
-                    help.setText("É a vez do teu adversário!");
-                    sendMesasge(BTMessages.yourTurn());
-                    return;
-                }
-                help.setText("Podes dar um tiro!");
-                myTurn = true;
-                break;
-            //Envio de Random
-            case 3:
-
-                if(code[3] > BTMessages.getMyRand()) {
-                    setupGrid(R.string.othersTurn, othersPlays);
-                    help.setText("É a vez do teu adversário!");
-                    sendMesasge(BTMessages.yourTurn());
-                }
-                else if(code[3]==BTMessages.getMyRand()) sendMesasge(BTMessages.sendFirstContact());
-
-                break;
-            //Dá a vez de jogar
-            case 4:
-                numbShots = 0;
-                setupGrid(R.string.yourTurn, myPlays);
-                myTurn = true;
-                help.setText("Podes dar um tiro!");
-                break;
-        }
-    }
-
-    private void sendMesasge(String message){
-
-    }
     private void SimulatePC() {
-        Log.d(TAG,"Simulating PC");
-        for (int i = 0; i < 1; i++) {
+        Log.d("GameActivity","Simulating PC");
+        for (int i = 0; i < 3; i++) {
             int pcShot = -1;
             while (pcShot == -1) {
                 pcShot = p2.shot(dificulty);
@@ -314,8 +271,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         goBtn.setVisibility(View.VISIBLE);
         help.setText(R.string.pressPlay);
     }
-
-
 
     public void markShot(int matrix, int shot, boolean success) {
         int[] playerGrid = othersPlays;
@@ -383,7 +338,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             aux.setBackgroundResource(R.drawable.shape_button);
             aux.setOnClickListener(this);
             aux.setId(i);
-            aux.setText(""+aux.getId());
+            //aux.setText(""+aux.getId());
         }
     }
 
@@ -426,24 +381,84 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+
+
     /**********************************************************************************************
      *
-     * MULTIPLAYER FROM GOOGLE, NOT OK
+     *                               MULTIPLAYER, NOT OK
      *
      **********************************************************************************************/
+
+
+    //Our function to threat received messaged
+    private void messageReceived(String message){
+        int[] code = BTMessages.decodMessage(message);
+        boolean answer = false;
+        switch (code[0]){
+            //Receção de tiro
+            case 1:
+                int hisShot = code[1];
+
+                answer = mainPlayer.getShot(hisShot);
+                sendMessage(BTMessages.sendShotFeedback(code[1],answer));
+
+                markShot(1,code[1],answer);
+                break;
+            //Receção feedback tiro
+            case 2:
+
+                if(code[2] == 1) answer = true;
+                markShot(2, code[1], answer);
+
+                if(numbShots > 2){
+                    setupGrid(R.string.othersTurn, othersPlays);
+                    help.setText("É a vez do teu adversário!");
+                    sendMessage(BTMessages.yourTurn());
+                    return;
+                }
+                help.setText("Podes dar um tiro!");
+                myTurn = true;
+                break;
+            //Envio de Random
+            case 3:
+
+                if(code[3] > BTMessages.getMyRand()) {
+                    setupGrid(R.string.othersTurn, othersPlays);
+                    help.setText("É a vez do teu adversário!");
+                    sendMessage(BTMessages.yourTurn());
+                }
+                else if(code[3]==BTMessages.getMyRand()) sendMessage(BTMessages.sendFirstContact());
+
+                break;
+            //Dá a vez de jogar
+            case 4:
+                numbShots = 0;
+                setupGrid(R.string.yourTurn, myPlays);
+                myTurn = true;
+                help.setText("Podes dar um tiro!");
+                break;
+        }
+    }
+
+    /********
+     *  Multiplayer, following Google's example
+     */
+
 
     public void onStart(){
         super.onStart();
         if(!multiplayer) return;
 
-    /*******
-     * MULTIPLAYER
-     */
-    //If bleutooth is not on, request it
-    //setupChat() will then be called during onActivityResult
+        /*******
+        * MULTIPLAYER
+        */
+        //If bleutooth is not on, request it
+        //setupChat() will then be called during onActivityResult
         if(!mBluetoothAdapter.isEnabled()){
+
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+
         } else if(mChatService == null){
             setupChat();
         }
@@ -453,45 +468,47 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         super.onDestroy();
         if(!multiplayer) return;
 
-    /*******
-     * MULTIPLAYER
-     */
+        /*******
+        * MULTIPLAYER
+        */
         if(mChatService != null){
             mChatService.stop();
-           }
        }
+   }
 
-       public void onResume(){
-           super.onResume();
-           if(!multiplayer) return;
+   public void onResume(){
+       super.onResume();
+       if(!multiplayer) return;
 
+        // Performing this check in onResume() covers the case in which BT was
+        // not enabled during onStart(), so we were paused to enable it...
+        // onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
+        //        if(mChatService != null){
+        //Only if the state is STATE_NONE, do we know that we haven't started already
 
-    // Performing this check in onResume() covers the case in which BT was
-    // not enabled during onStart(), so we were paused to enable it...
-    // onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
-//        if(mChatService != null){
-    //Only if the state is STATE_NONE, do we know that we haven't started already
-           if(mChatService.getState() == BluetoothChatService.STATE_NONE){
-    //Start BT chat services
-               mChatService.start();
-            }
+       if(mChatService.getState() == BluetoothChatService.STATE_NONE){
+        //Start BT chat services
+           mChatService.start();
         }
+    }
 
 
     private void setupChat(){
         //Initialize the BluetoothChatService to perform bluetooth connections
-        mChatService = new BluetoothChatService(GameActivity.this,mHandler);
+        mChatService = new BluetoothChatService(GameActivity.this, mHandler);
 
         //Initialize the buffer for outgoing messages
         mOutStringBuffer = new StringBuffer("");
     }
 
     private void ensureDiscoverable(){
+
         if(mBluetoothAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE){
             Intent discoverableIntent = new Intent(mBluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
             discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
             startActivity(discoverableIntent);
         }
+
     }
 
     //Send a message
@@ -511,51 +528,56 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            FragmentActivity activity = GameActivity.this;
-            switch (msg.what){
-                case Constants.MESSAGE_STATE_CHANGE:
-                    switch (msg.arg1){
-                        case BluetoothChatService.STATE_CONNECTED:
-                            //TODO: setStatus("connected to ${device name}");
-                            mConversationArrayAdapter.clear();
-                            break;
-                        case BluetoothChatService.STATE_CONNECTING:
-                            //TODO: setStatus("connecting...");
-                            break;
-                        case BluetoothChatService.STATE_LISTEN:
-                            //TODO: setStatus("listening...");
-                            break;
-                        case BluetoothChatService.STATE_NONE:
-                            //TODO: setStatus("not connected");
-                            break;
-                    }
-                    break;
-                case Constants.MESSAGE_WRITE:
-                    byte[] writeBuf =(byte[]) msg.obj;
-                    //Construct a string from the buffer
-                    String writeMessage = new String(writeBuf);
-                    mConversationArrayAdapter.add("Me: " + writeMessage);
-                    break;
-                case Constants.MESSAGE_READ:
-                    byte[] readBuf = (byte[]) msg.obj;
-                    //construct a string from the valid bytes in the buffer
-                    String readMessage = new String(readBuf,0,msg.arg1);
-                    mConversationArrayAdapter.add(mConnectedDeviceName+": "+readMessage);
-                    debug.setText(readMessage);
-                    break;
-                case Constants.MESSAGE_DEVICE_NAME:
-                    //save the connected device's name
-                    mConnectedDeviceName = msg.getData().getString(Constants.DEVICE_NAME);
-                    if(null != activity){
-                        Toast.makeText(activity, "Connected to "+mConnectedDeviceName,Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-                case Constants.MESSAGE_TOAST:
-                    if(null!=activity){
-                        Toast.makeText(activity,msg.getData().getString(Constants.TOAST),Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-            }
+        FragmentActivity activity = GameActivity.this;
+        switch (msg.what){
+            case Constants.MESSAGE_STATE_CHANGE:
+                switch (msg.arg1){
+                    case BluetoothChatService.STATE_CONNECTED:
+                        //TODO: setStatus("connected to ${device name}");
+                        mConversationArrayAdapter.clear();
+                        break;
+                    case BluetoothChatService.STATE_CONNECTING:
+                        //TODO: setStatus("connecting...");
+                        break;
+                    case BluetoothChatService.STATE_LISTEN:
+                        //TODO: setStatus("listening...");
+                        break;
+                    case BluetoothChatService.STATE_NONE:
+                        //TODO: setStatus("not connected");
+                        break;
+                }
+                break;
+            case Constants.MESSAGE_WRITE:
+                byte[] writeBuf =(byte[]) msg.obj;
+                //Construct a string from the buffer
+                String writeMessage = new String(writeBuf);
+                //mConversationArrayAdapter.add("Me: " + writeMessage);
+                break;
+
+            case Constants.MESSAGE_READ:
+                byte[] readBuf = (byte[]) msg.obj;
+                //construct a string from the valid bytes in the buffer
+                String readMessage = new String(readBuf,0,msg.arg1);
+                messageReceived(readMessage);
+                //mConversationArrayAdapter.add(mConnectedDeviceName+": "+readMessage);
+                //debug.setText(readMessage);
+                break;
+
+            case Constants.MESSAGE_DEVICE_NAME:
+                //save the connected device's name
+                mConnectedDeviceName = msg.getData().getString(Constants.DEVICE_NAME);
+
+                if(null != activity){
+                    Toast.makeText(activity, "Connected to "+mConnectedDeviceName,Toast.LENGTH_SHORT).show();
+                }
+                break;
+
+            case Constants.MESSAGE_TOAST:
+                if(null!=activity){
+                    Toast.makeText(activity,msg.getData().getString(Constants.TOAST),Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
         }
     };
 
@@ -578,7 +600,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     //Bluetooth is now enabled, so set up a chat session
                     setupChat();
                 } else {
-                    Toast.makeText(GameActivity.this,"Bluetooth was not enabled. Leaving Multiplayer.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GameActivity.this,"Bluetooth was not enabled. Leaving multiplayer.",Toast.LENGTH_SHORT).show();
                     this.finish();
                 }
                 break;
@@ -594,6 +616,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         //Attempt to connect to the device
         mChatService.connect(device,secure);
     }
+
+
+    /********************************************
+     *
+     *      MULTIPLAYER - Second approach
+     *
+     ******************************************/
+
 
     /*protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -682,49 +712,49 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                                    final SmoothBluetooth.ConnectionCallback connectionCallback) {
             ArrayAdapter<String> ArrayBluetooth;
 
-         /*   final MaterialDialog dialog = new MaterialDialog.Builder(GameActivity.this)
-                    .title("Devices")
-                    .adapter(new DevicesAdapter(GameActivity.this, deviceList),null)
-                    .build();
+             /*   final MaterialDialog dialog = new MaterialDialog.Builder(GameActivity.this)
+                        .title("Devices")
+                        .adapter(new DevicesAdapter(GameActivity.this, deviceList),null)
+                        .build();
 
-            RecyclerView.Recycler listView = dialog.getListView();
-            if (listView != null) {
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        connectionCallback.connectTo(deviceList.get(position));
-                        dialog.dismiss();
-                    }
+                RecyclerView.Recycler listView = dialog.getListView();
+                if (listView != null) {
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            connectionCallback.connectTo(deviceList.get(position));
+                            dialog.dismiss();
+                        }
 
-                });
-            }
-
-            dialog.show();*/
-            //Intent abreLista = new Intent(GameActivity.this, ListDevices.class);
-            // startActivityResult(abreLista, ENABLE_BT__REQUEST2);
-            //startActivityForResult(abreLista, ENABLE_BT__REQUEST2);
-            Log.d("----------------------",";;;;;;;;;;;;;;;;;;;");
-            AlertDialog.Builder builderSingle = new AlertDialog.Builder(GameActivity.this);
-            //builderSingle.setIcon(R.drawable.ic_launcher);
-            builderSingle.setTitle("Choose one Paired Connection:-");
-
-            final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(GameActivity.this, android.R.layout.select_dialog_singlechoice);
-            ArrayBluetooth = new ArrayAdapter<String>(GameActivity.this, android.R.layout.select_dialog_singlechoice);
-            meuBluetoothadapter = BluetoothAdapter.getDefaultAdapter();
-            Set<BluetoothDevice> devicesP = meuBluetoothadapter.getBondedDevices();
-        Log.d("Inside Listener"," size " +devicesP.size());
-            if(devicesP.size()> 0){
-                for(BluetoothDevice device : devicesP){
-                    String nomeBT = device.getName();
-                    String macAdd = device.getAddress();
-                    ArrayBluetooth.add(nomeBT + "\n" + macAdd);
+                    });
                 }
-            }
+
+                dialog.show();*/
+                //Intent abreLista = new Intent(GameActivity.this, ListDevices.class);
+                // startActivityResult(abreLista, ENABLE_BT__REQUEST2);
+                //startActivityForResult(abreLista, ENABLE_BT__REQUEST2);
+                Log.d("----------------------",";;;;;;;;;;;;;;;;;;;");
+                AlertDialog.Builder builderSingle = new AlertDialog.Builder(GameActivity.this);
+                //builderSingle.setIcon(R.drawable.ic_launcher);
+                builderSingle.setTitle("Choose one Paired Connection:-");
+
+                final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(GameActivity.this, android.R.layout.select_dialog_singlechoice);
+                ArrayBluetooth = new ArrayAdapter<String>(GameActivity.this, android.R.layout.select_dialog_singlechoice);
+                meuBluetoothadapter = BluetoothAdapter.getDefaultAdapter();
+                Set<BluetoothDevice> devicesP = meuBluetoothadapter.getBondedDevices();
+                Log.d("Inside Listener"," size " +devicesP.size());
+                if(devicesP.size()> 0){
+                    for(BluetoothDevice device : devicesP){
+                        String nomeBT = device.getName();
+                        String macAdd = device.getAddress();
+                        ArrayBluetooth.add(nomeBT + "\n" + macAdd);
+                    }
+                }
 
             builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
+                dialog.dismiss();
                 }
             });
 
@@ -732,21 +762,22 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
-                    String strName = arrayAdapter.getItem(which);
-                    Log.d("Inside Listener"," size " +strName);
-                    String mac = strName.substring(strName.length() - 17);
-                    Log.d("Inside Listener"," size " +mac);
+                String strName = arrayAdapter.getItem(which);
+                Log.d("Inside Listener"," size " +strName);
+                String mac = strName.substring(strName.length() - 17);
+                Log.d("Inside Listener"," size " +mac);
 
-                    connectionCallback.connectTo(new Device("Player2",mac,true));
-                    dialog.dismiss();
+                connectionCallback.connectTo(new Device("Player2",mac,true));
+                dialog.dismiss();
 
-                    //builderInner.show();
+                //builderInner.show();
                 }
             });
             builderSingle.show();
         }
 
         private void startActivityOnResult(Intent abreLista, int enableBt_request2) {
+
         }
 
         @Override
