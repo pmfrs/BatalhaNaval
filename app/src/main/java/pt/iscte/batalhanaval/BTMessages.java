@@ -18,7 +18,7 @@ public class BTMessages {
     //Evento 3 - Envio de Random, para decidir quem começa primeiro
     //Evento 4 - Dá a vez de jogar ao outro jogador
 
-    private static String TAG = "BTMessages";
+    private static final String TAG = "BTMessages";
     private static int myRand;
 
     public static String sendShot(int coordenada){

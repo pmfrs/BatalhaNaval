@@ -28,20 +28,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PlaceShipsActivity" >        </activity>
+        <activity android:name=".PlaceShipsActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".GameActivity" />
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-
         <activity android:name=".Lobby" />
         <activity android:name=".InstructionsActivity" />
-        <activity android:name=".ListDevices"
-            android:theme="@android:style/Theme.Dialog"
-            android:label="Select a device to connect">
-        </activity>
+        <activity android:name=".DeviceListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/select_device"
+            android:theme="@android:style/Theme.Holo.Dialog"/>
     </application>
 
 </manifest>

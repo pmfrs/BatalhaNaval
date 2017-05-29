@@ -25,7 +25,6 @@ import android.widget.GridLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.afollestad.materialdialogs.MaterialDialog;
 
 import org.w3c.dom.Text;
 
@@ -37,8 +36,8 @@ import java.util.TimerTask;
 
 
 
-import io.palaima.smoothbluetooth.Device;
-import io.palaima.smoothbluetooth.SmoothBluetooth;
+//import io.palaima.smoothbluetooth.Device;
+//import io.palaima.smoothbluetooth.SmoothBluetooth;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -69,7 +68,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     /*****************************
      * New Bluetooth
      *****************************/
-    private SmoothBluetooth mSmoothBluetooth;
+    //private SmoothBluetooth mSmoothBluetooth;
 
 
     /*****************************
@@ -216,11 +215,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         } else if (v.equals(connectBtn)) {
 
-            /*Launch the DeviceListActivity to see devices and do scan
+            // Launch the DeviceListActivity to see devices and do scan
             Intent serverIntent = new Intent(GameActivity.this, DeviceListActivity.class);
-            startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_INSECURE);
-            return true;
-            mSmoothBluetooth.tryConnection();*/
+            startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
+            //mSmoothBluetooth.tryConnection();*/
 
         } else if (v.equals(findBtn)) {
 
@@ -412,7 +410,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
                 if(numbShots > 2){
                     setupGrid(R.string.othersTurn, othersPlays);
-                    help.setText("É a vez do teu adversário!");
                     sendMessage(BTMessages.yourTurn());
                     return;
                 }
@@ -424,7 +421,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
                 if(code[3] > BTMessages.getMyRand()) {
                     setupGrid(R.string.othersTurn, othersPlays);
-                    help.setText("É a vez do teu adversário!");
                     sendMessage(BTMessages.yourTurn());
                 }
                 else if(code[3]==BTMessages.getMyRand()) sendMessage(BTMessages.sendFirstContact());
@@ -435,7 +431,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 numbShots = 0;
                 setupGrid(R.string.yourTurn, myPlays);
                 myTurn = true;
-                help.setText("Podes dar um tiro!");
                 break;
         }
     }
@@ -524,7 +519,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mChatService.write(send);
     }
 
-    //The Handler that get information back from the BluetootchChatService
+    //The Handler that gets information back from the BluetootchChatService
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -621,7 +616,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     /********************************************
      *
      *      MULTIPLAYER - Second approach
-     *
+     *   https://github.com/palaima/AndroidSmoothBluetooth
      ******************************************/
 
 
@@ -643,7 +638,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }*/
 
-    private SmoothBluetooth.Listener mListener = new SmoothBluetooth.Listener() {
+    /*private SmoothBluetooth.Listener mListener = new SmoothBluetooth.Listener() {
         @Override
         public void onBluetoothNotSupported() {
             Toast.makeText(GameActivity.this, "Bluetooth not found", Toast.LENGTH_SHORT).show();
@@ -733,7 +728,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 //Intent abreLista = new Intent(GameActivity.this, ListDevices.class);
                 // startActivityResult(abreLista, ENABLE_BT__REQUEST2);
                 //startActivityForResult(abreLista, ENABLE_BT__REQUEST2);
-                Log.d("----------------------",";;;;;;;;;;;;;;;;;;;");
+               /* Log.d("----------------------",";;;;;;;;;;;;;;;;;;;");
                 AlertDialog.Builder builderSingle = new AlertDialog.Builder(GameActivity.this);
                 //builderSingle.setIcon(R.drawable.ic_launcher);
                 builderSingle.setTitle("Choose one Paired Connection:-");
@@ -794,5 +789,5 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 mResponsesAdapter.notifyDataSetChanged();
             }
         }
-    };
+    };*/
 }

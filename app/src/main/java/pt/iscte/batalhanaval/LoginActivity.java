@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth.AuthStateListener mAuthListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
@@ -71,6 +72,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         callbackManager = CallbackManager.Factory.create();
         loginFB = (LoginButton) findViewById(R.id.login_button);
+
         loginFB.setReadPermissions("email","public_profile");
         loginFB.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -94,6 +96,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onBackPressed(){
 
     }
+
     private void handleFacebookAccessToken(AccessToken accessToken) {
         AuthCredential credential = FacebookAuthProvider.getCredential(accessToken.getToken());
         firebaseAuth.signInWithCredential(credential)
@@ -132,12 +135,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String password = passTxt.getText().toString().trim();
 
         if (TextUtils.isEmpty(email)){
-            Toast.makeText(this,"Please enter email",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Por favor insira o e-mail",Toast.LENGTH_LONG).show();
             return;
         }
 
         if (TextUtils.isEmpty(password)){
-            Toast.makeText(this,"Please enter password",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Por favor insira a password",Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -152,7 +155,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             finish();
                             startActivity(new Intent(getApplicationContext(),Lobby.class));
                         } else if (task.isComplete()){
-                            Toast.makeText(getApplicationContext(),"Login Failed!",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"Falha no login!",Toast.LENGTH_LONG).show();
                         }
                     }
                 });

@@ -73,11 +73,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String email = mailTxt.getText().toString().trim();
         String password = passTxt.getText().toString();
         if(TextUtils.isEmpty(email)){
-            Toast.makeText(this, "Please Enter Email", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Por favor insira o e-mail.", Toast.LENGTH_SHORT).show();
             return;
         }
         if(TextUtils.isEmpty(password)){
-            Toast.makeText(this, "Please Enter Password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Por favor insira uma password.", Toast.LENGTH_SHORT).show();
             return;
         }
 

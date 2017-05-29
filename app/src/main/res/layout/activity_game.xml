@@ -944,8 +944,8 @@
             android:id="@+id/go"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="putShips"
-            android:text="Play" />
+            android:text="Play"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/quit"
