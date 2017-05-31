@@ -2,14 +2,24 @@ package pt.iscte.batalhanaval;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
@@ -21,12 +31,24 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener{
     private Button instBtn;
     private String multiplayer = "OFF";
 
+
+    private boolean changeBD;
+    private int numbWins=0, numLoses=0;
+
+    private TextView welcomeTxt, statsTxt;
+
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lobby);
+
+
+
+        //final MediaPlayer mp = MediaPlayer.create(this, R.raw.backsound);
+        //mp.start();
 
         LogOutTV = (TextView) findViewById(R.id.LogOutTV);
         singleplayerBtn = (Button) findViewById(R.id.play_pc);
@@ -43,6 +65,74 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener{
         singleplayerBtn.setOnClickListener(this);
         multiplayerBtn.setOnClickListener(this);
         instBtn.setOnClickListener(this);
+
+        welcomeTxt = (TextView) findViewById(R.id.welcomeTxt);
+        statsTxt = (TextView) findViewById(R.id.stats);
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        welcomeTxt.setText("Bem-vindo");
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        final String userUid = user.getUid();
+        Toast.makeText(getApplicationContext(), userUid, Toast.LENGTH_SHORT);
+
+
+
+        databaseReference.child("users").child(userUid).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        boolean newStats = false;
+
+                        Intent intent = getIntent();
+                        Bundle extras = intent.getExtras();
+                        if(extras != null){
+                            changeBD = true;
+                            newStats = getIntent().getExtras().getBoolean("WINS");
+                        }
+
+                        String wins = "" , loses = "";
+                        String nickname = "Bem-vindo";
+
+                        for(DataSnapshot child : dataSnapshot.getChildren()){
+                            if(child.getKey().equals("nickname")){
+                                nickname = child.getValue().toString();
+                            }
+                            if(child.getKey().equals("wins")) {
+                                wins = child.getValue().toString();
+                            }
+                            if(child.getKey().equals("loses")) {
+                                loses = child.getValue().toString();
+                            }
+                        }
+
+                        numbWins = Integer.parseInt(wins);
+                        numLoses = Integer.parseInt(loses);
+
+                        if(changeBD){
+                            if(newStats) numbWins++;
+                            else numLoses++;
+
+                            DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("users");
+
+                            UserInformation newUser = new UserInformation(nickname,numbWins,numLoses);
+
+                            databaseReference2.child(userUid).setValue(newUser);
+                        }
+
+                        welcomeTxt.setText("Bem-vindo "+nickname+"!");
+                        statsTxt.setText("Ganhaste: "+Integer.toString(numbWins) + " jogos\nPerdeste: "+Integer.toString(numLoses)+" jogos");
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w("LOBBY", "getUser:onCancelled", databaseError.toException());
+                        // ...
+                    }
+                });
     }
 
     @Override

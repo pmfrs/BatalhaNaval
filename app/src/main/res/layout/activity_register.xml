@@ -23,6 +23,14 @@
             android:text="@string/RegisterTxt" />
 
         <EditText
+            android:id="@+id/nickname"
+            android:layout_width="368dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Nickname"
+            android:inputType="textEmailAddress"
+            android:paddingTop="10dp" />
+        <EditText
             android:paddingTop="10dp"
             android:id="@+id/rgEmailTxt"
             android:layout_width="368dp"
@@ -42,7 +50,7 @@
 
         <View
             android:layout_width="0dp"
-            android:layout_height="75dp"
+            android:layout_height="60dp"
             android:layout_weight="1" />
 
         <Button

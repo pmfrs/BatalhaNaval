@@ -21,6 +21,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -28,27 +31,33 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText usernameTxt ;
     private EditText nascTxt ;
     private EditText mailTxt ;
-    private EditText passTxt ;
+    private EditText passTxt;
+    private EditText nickname;
     private Button regBtn ;
     private Button cancBtn ;
     private ProgressDialog pgb;
     private FirebaseAuth firebaseAuth;
+
+    private DatabaseReference databaseReference;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        // EditText usernameTxt = (EditText) findViewById(R.id.rgUsernameTxt);
-        // EditText nascTxt = (EditText) findViewById(R.id.rgPassTxt);
+
         mailTxt = (EditText) findViewById(R.id.rgEmailTxt);
         passTxt = (EditText) findViewById(R.id.rgPassTxt);
+        nickname = (EditText) findViewById(R.id.nickname);
+
         regBtn = (Button) findViewById(R.id.rgRegistarBtn);
         cancBtn = (Button) findViewById(R.id.rgCancelarBtn);
         pgb = new ProgressDialog(this);
+
         //Firebase.setAndroidContext(this);
         //FirebaseApp.initializeApp(this);
         firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference("users");
 
         cancBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +81,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         String email = mailTxt.getText().toString().trim();
         String password = passTxt.getText().toString();
+        final String name = nickname.getText().toString();
+
+        //String nickname = nickname.getText()
+
         if(TextUtils.isEmpty(email)){
             Toast.makeText(this, "Por favor insira o e-mail.", Toast.LENGTH_SHORT).show();
             return;
@@ -80,6 +93,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             Toast.makeText(this, "Por favor insira uma password.", Toast.LENGTH_SHORT).show();
             return;
         }
+        if(TextUtils.isEmpty(name)){
+            Toast.makeText(this, "Por favor insira um nickname..", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
 
         pgb.setMessage("Registering on progress");
         pgb.show();
@@ -90,7 +108,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
                             pgb.cancel();
-                            Toast.makeText(RegisterActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Registado com sucesso.", Toast.LENGTH_SHORT).show();
+                            saveUserInformation(name);
+                            finish();
+                            startActivity(new Intent(getApplicationContext(),Lobby.class));
                         }else{
                             //task.getException().getMessage();
                             pgb.cancel();
@@ -107,5 +128,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     }
                 });
 
+    }
+
+    private void saveUserInformation(String nickname){
+        UserInformation userInfo = new UserInformation(nickname,0,0);
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+
+        databaseReference.child(user.getUid()).setValue(userInfo);
+        //databaseReference.child(user.getUid()).getDatabase();
     }
 }

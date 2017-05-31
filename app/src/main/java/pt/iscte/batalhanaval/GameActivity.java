@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Handler;
 import android.os.Message;
@@ -22,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,12 +43,14 @@ import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
+
     //private String TAG = "GameActivity";
     private Button goBtn;
     private Button quitBtn;
-    private Button findBtn;
     private Button connectBtn;
+    private ImageButton soundBtn;
     private TextView help, debug;
+
     public static final int ENABLE_BT__REQUEST = 1;
     public static final int ENABLE_BT__REQUEST2 = 2;
     private List<Integer> mBuffer = new ArrayList<>();
@@ -58,12 +62,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private int myBoatsDisplay = 99, plays = 0, successfulShots = 0, successfulShots2 = 0;
 
-    private Boolean multiplayer, myTurn = true;
+    private Boolean multiplayer, myTurn = true, soundOn;
 
     private int[] myPlays, othersPlays;
     private Player p2, mainPlayer;
 
     private int numbShots, dificulty;
+
+    private MediaPlayer mp, hit, miss;
+
+    private boolean winner = false;
 
     /*****************************
      * New Bluetooth
@@ -133,11 +141,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         goBtn = (Button) findViewById(R.id.go);
         goBtn.setOnClickListener(this);
 
-        findBtn = (Button) findViewById(R.id.findBtn);
-        findBtn.setOnClickListener(this);
-
         quitBtn = (Button) findViewById(R.id.quit);
         quitBtn.setOnClickListener(this);
+
+        soundBtn = (ImageButton) findViewById(R.id.sound);
+        soundBtn.setOnClickListener(this);
 
         connectBtn = (Button) findViewById(R.id.connect);
         connectBtn.setOnClickListener(this);
@@ -154,9 +162,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             int n = Integer.parseInt(x);
             dificulty = n;
             int botDisplay = rand.nextInt(5)+1;
-            p2 = new Player(botDisplay, myBoatsDisplay);
 
-            help.setText("My: " + myBoatsDisplay + " His: "+botDisplay);
+            if(botDisplay == myBoatsDisplay){
+                if(botDisplay == 5) botDisplay = 1;
+                else botDisplay++;
+            }
+
+            p2 = new Player(botDisplay, myBoatsDisplay);
 
             goBtn.setVisibility(View.INVISIBLE);
             myTurn = true;
@@ -167,7 +179,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
              *      MULTIPLAYER STUFF
              ******************************/
             connectBtn.setVisibility(View.VISIBLE);
-            findBtn.setVisibility(View.VISIBLE);
 
             //Get local Bluetooth adapter
             mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -198,6 +209,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         for (int i = 0; i < boats.length; i++) {
             othersPlays[boats[i]] = 5;
         }
+
+        soundOn = true;
+
+        mp = MediaPlayer.create(this, R.raw.backsound);
+        mp.setLooping(true);
+
+        hit = MediaPlayer.create(this,R.raw.hit);
+        miss = MediaPlayer.create(this,R.raw.miss);
     }
 
     public void onClick(View v) {
@@ -220,9 +239,18 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
             //mSmoothBluetooth.tryConnection();*/
 
-        } else if (v.equals(findBtn)) {
+        } else if (v.equals(soundBtn)) {
 
-            //mSmoothBluetooth.tryConnection();
+            if(soundOn){
+                soundOn = !soundOn;
+                soundBtn.setImageResource(R.drawable.audiooff);
+                mp.pause();
+            }
+            else {
+                soundOn = !soundOn;
+                soundBtn.setImageResource(R.drawable.audioon);
+                mp.start();
+            }
 
 
         } else {
@@ -282,7 +310,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         if (!success) {
             aux.setBackgroundResource(R.drawable.shape_button_blue);
             playerGrid[shot] = 2;//2 means miss
+            if(matrix == 1 && soundOn) miss.start();
         } else {
+            if(matrix == 1 && soundOn) hit.start();
             aux.setBackgroundResource(R.drawable.shape_button_red);
             playerGrid[shot] = 1; //1 means success
 
@@ -291,8 +321,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             debug.setText("Potuação: \n\nTu: " + successfulShots + "/14\nAdversário: " + successfulShots2 + "/14");
 
-            if (successfulShots > 13)  endGame("Parabéns foi o vencedor do jogo!");
-            else if(successfulShots2 > 13) endGame("O seu adversário ganhou, o jogo terminou.");
+            if (successfulShots > 13)  endGame(true,"Parabéns foi o vencedor do jogo!");
+            else if(successfulShots2 > 13) endGame(false,"O seu adversário ganhou, o jogo terminou.");
 
         }
     }
@@ -346,6 +376,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Intent registerIntent = new Intent(GameActivity.this, Lobby.class);
+                        registerIntent.putExtra("WINS",winner);
                         GameActivity.this.startActivity(registerIntent);
                     }
                 })
@@ -360,12 +391,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         check.show();
     }
 
-    private void endGame(String message) {
+    private void endGame(boolean win, String message) {
+        winner = win;
+
         AlertDialog.Builder alertD = new AlertDialog.Builder(GameActivity.this);
         alertD.setMessage(message).setCancelable(false)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Intent registerIntent = new Intent(GameActivity.this, Lobby.class);
+                        registerIntent.putExtra("WINS",winner);
                         GameActivity.this.startActivity(registerIntent);
                     }
                 });
@@ -442,6 +476,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     public void onStart(){
         super.onStart();
+        mp.start();
         if(!multiplayer) return;
 
         /*******
@@ -470,9 +505,19 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             mChatService.stop();
        }
    }
+   public void onStop(){
+       super.onStop();
+       mp.stop();
+   }
+
+    public void onPause(){
+        super.onPause();
+        mp.stop();
+    }
 
    public void onResume(){
        super.onResume();
+       mp.start();
        if(!multiplayer) return;
 
         // Performing this check in onResume() covers the case in which BT was
