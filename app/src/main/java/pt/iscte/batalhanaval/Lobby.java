@@ -123,14 +123,11 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener{
 
                         welcomeTxt.setText("Bem-vindo "+nickname+"!");
                         statsTxt.setText("Ganhaste: "+Integer.toString(numbWins) + " jogos\nPerdeste: "+Integer.toString(numLoses)+" jogos");
-
-
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Log.w("LOBBY", "getUser:onCancelled", databaseError.toException());
-                        // ...
+                        Toast.makeText(Lobby.this, "Falha ao conectar com a BD", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
