@@ -26,6 +26,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -39,6 +41,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth firebaseAuth;
     private LoginButton loginFB;
     private FirebaseAuth.AuthStateListener mAuthListener;
+
+    private DatabaseReference databaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -47,6 +51,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference("users");
 
         if (firebaseAuth.getCurrentUser() != null){
             //finish();
@@ -106,6 +111,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (task.isSuccessful()){
                             Toast.makeText(getApplicationContext(),"Login Accepted",Toast.LENGTH_LONG).show();
                             FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                            saveUserInformation(user.getEmail().toLowerCase().toString());
+
                             Toast.makeText(getApplicationContext(),user.getEmail().toLowerCase().toString(),Toast.LENGTH_LONG).show();
                             if (user != null) {
                                 startActivity(new Intent(getApplicationContext(), Lobby.class));
@@ -160,5 +168,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 });
 
+    }
+
+    private void saveUserInformation(String nickname){
+        UserInformation userInfo = new UserInformation(nickname,0,0);
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        String userId= user.getUid();
+
+        if(databaseReference.child("users").child(userId) != null){
+                databaseReference.child(user.getUid()).setValue(userInfo);
+        }
+        //databaseReference.child(user.getUid()).getDatabase();
     }
 }
